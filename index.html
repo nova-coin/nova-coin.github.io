@@ -168,7 +168,7 @@
 }
 
 * {
-  margin: 1;
+  margin: 0.01;
   padding: 0;
   box-sizing: border-box;
 }
@@ -1385,8 +1385,10 @@ footer {
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 36px;
+    opacity: 0;
+    pointer-events: none;
   }
+}
 
   .contract-address {
     flex-direction: column;
