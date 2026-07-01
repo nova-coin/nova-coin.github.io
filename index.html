@@ -1566,7 +1566,7 @@ footer {
         <a href="#exchanges" class="footer-link" data-en="Exchanges" data-ru="Биржи">Exchanges</a>
         <a href="#start" class="footer-link" data-en="Get Started" data-ru="Начать">Get Started</a>
         <a href="#buy" class="footer-link" data-en="Explorers" data-ru="Эксплореры">Explorers</a>
-        <a href="https://miningpoolstats.stream/novacoin" target="_blank" data-en="Pools" data-ru="Пулы">Pools</a>
+        <a href="https://miningpoolstats.stream/novacoin" target="_blank" class="footer-link" data-en="Pools" data-ru="Пулы">Pools</a>
       </div>
       <p class="footer-text" data-en="&copy; 2026 NovaCoin Community. Open-source decentralized cryptocurrency." data-ru="&copy; 2025 NovaCoin. Децентрализованная криптовалюта с открытым исходным кодом.">&copy; 2026 NovaCoin Community. Open-source decentralized cryptocurrency.</p>
     </div>
@@ -2445,20 +2445,31 @@ footer {
         });
       });
       
-      // Footer links
-      document.querySelectorAll('.footer-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').substring(1);
-          
-          // Update nav
-          navLinks.forEach(l => l.classList.remove('active'));
-          const navLink = document.querySelector(`.nav-link[href="#${targetId}"]`);
-          if (navLink) navLink.classList.add('active');
-          
-          scrollToSection(targetId);
-        });
-      });
+// Footer links
+document.querySelectorAll('.footer-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
+
+    // Internal links (#anchor)
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+
+      // Update nav
+      navLinks.forEach(l => l.classList.remove('active'));
+      const navLink = document.querySelector(`.nav-link[href="#${targetId}"]`);
+      if (navLink) navLink.classList.add('active');
+
+      scrollToSection(targetId);
+    }
+
+    // External links (http/https) — allow
+    else {
+      // e.preventDefault();
+      // window.open(href, '_blank');
+    }
+  });
+});
       
       // Logo click
       document.querySelector('.logo').addEventListener('click', () => {
