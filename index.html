@@ -576,60 +576,6 @@ section {
   line-height: 1.6;
 }
 
-/* Advantages Section */
-.advantages-section {
-  background: var(--color-bg-1);
-  border-radius: var(--radius-xl);
-  padding: var(--space-64) var(--space-32);
-}
-
-.advantages-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-24);
-}
-
-.advantage-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  text-align: center;
-  transition: all 0.4s var(--ease-standard);
-  box-shadow: var(--card-shadow);
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.advantage-card.animate {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.advantage-card:hover {
-  transform: scale(1.05) translateY(-5px);
-  box-shadow: 0 12px 40px var(--glow-color);
-}
-
-.advantage-icon {
-  font-size: 56px;
-  margin-bottom: var(--space-16);
-  display: block;
-  filter: drop-shadow(0 4px 8px var(--glow-color));
-}
-
-.advantage-title {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--space-12);
-  color: var(--color-text);
-}
-
-.advantage-description {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
-}
-
 /* Specs Section */
 .specs-table {
   display: grid;
@@ -1366,7 +1312,6 @@ footer {
   }
 
   .features-grid,
-  .advantages-grid,
   .specs-table,
   .exchanges-grid {
     grid-template-columns: 1fr;
@@ -1469,19 +1414,6 @@ footer {
   <section id="features">
     <h2 class="section-title" data-en="Features" data-ru="Особенности">Features</h2>
     <div class="features-grid" id="featuresGrid"></div>
-  </section>
-
-  <section id="why-novacoin">
-    <h2 class="section-title" data-en="Why NovaCoin?" data-ru="Почему NovaCoin?">Why NovaCoin?</h2>
-    <p class="section-description" data-en="NovaCoin combines innovative solutions in one cryptocurrency" data-ru="NovaCoin сочетает инновационные решения в одной криптовалюте">NovaCoin combines innovative solutions in one cryptocurrency</p>
-    <div class="features-grid" id="whyNovaGrid"></div>
-  </section>
-
-  <section>
-    <div class="advantages-section">
-      <h2 class="section-title" data-en="Advantages" data-ru="Преимущества">Advantages</h2>
-      <div class="advantages-grid" id="advantagesGrid"></div>
-    </div>
   </section>
 
   <section id="specs">
@@ -1879,48 +1811,17 @@ footer {
           {
             icon: '🔗',
             title: 'Hybrid Consensus',
-            description: 'The first cryptocurrency based on hybrid Proof-of-Work (Scrypt)/Proof-of-Stake block generation methods that enable fast, near-zero cost payments and contribute to the coin\'s energy efficiency.'
+            description: 'Hybrid Proof-of-Work/Proof-of-Stake system ensures maximum network protection. Dual consensus mechanism prevents attacks and guarantees blockchain integrity.'
           },
           {
             icon: '🔐',
             title: 'Private Transactions',
-            description: 'NovaCoin is an open-source decentralized global payment network, it supports private transactions without the need to use master nodes or mixing services for addresses starting from 5.'
+            description: 'NovaCoin is a global payment network. It supports private transactions without the need to use master nodes or mixing services for addresses starting with 5.'
           },
           {
             icon: '💎',
             title: 'Unique Emission Model',
             description: 'Despite a more frequent block generation than Bitcoin, NovaCoin uses a different emission model with lower rewards. This is designed to ensure scarcity and enhance the stock-to-flow value of the coin.'
-          }
-        ],
-        ru: [
-          {
-            icon: '🔗',
-            title: 'Гибридный консенсус',
-            description: 'Первая криптовалюта на основе гибридных методов генерации блоков Proof-of-Work (Scrypt) и Proof-of-Stake, обеспечивающих быстрые переводы с почти нулевой стоимостью и повышенную энергоэффективность монеты.'
-          },
-          {
-            icon: '🔐',
-            title: 'Приватные транзакции',
-            description: 'NovaCoin - это децентрализованная глобальная платёжная сеть с открытым исходным кодом, поддерживающая приватные транзакции без необходимости использования мастернод или сервисов микширования для адресов, начинающихся с 5.'
-          },
-          {
-            icon: '💎',
-            title: 'Уникальная модель эмиссии',
-            description: 'Несмотря на более частую генерацию блоков, чем у Bitcoin, NovaCoin использует другую модель эмиссии с меньшими вознаграждениями. Это создано для обеспечения дефицита и повышения соотношения запаса к потоку монеты.'
-          }
-        ]
-      },
-      whyNovacoin: {
-        en: [
-          {
-            icon: '🔗',
-            title: 'Hybrid Consensus',
-            description: 'NovaCoin was the first project to implement a hybrid consensus system, combining the efficiency of Proof-of-Stake with the security of Proof-of-Work (Scrypt). This achieves the perfect balance between performance and attack protection.'
-          },
-          {
-            icon: '🔐',
-            title: 'Private Transactions',
-            description: 'Unlike Bitcoin, NovaCoin supports private addresses by default, starting with the digit 5. This provides confidentiality without the need for additional mixing services.'
           },
           {
             icon: '🌱',
@@ -1930,12 +1831,7 @@ footer {
           {
             icon: '💸',
             title: 'Low Fees',
-            description: 'Transaction fee is just 0.001 NVC - one of the lowest on the market. This makes NovaCoin practical for micropayments and everyday transactions.'
-          },
-          {
-            icon: '📈',
-            title: 'Long-term Value',
-            description: 'NovaCoin\'s unique emission model is designed to ensure long-term value growth. Limited supply and staking mechanism create a scarcity economy supporting sustainable price appreciation.'
+            description: 'Standard transaction fee is only 0.001 NVC, while transactions up to 1 KB without OP_RETURN outputs and outputs below 0.01 NVC, made from coins with more than 144 confirmations, are processed free of charge. This makes NovaCoin a practical means for everyday payments.'
           },
           {
             icon: '🌐',
@@ -1947,12 +1843,18 @@ footer {
           {
             icon: '🔗',
             title: 'Гибридный консенсус',
-            description: 'NovaCoin был первым проектом, который реализовал гибридную систему консенсуса, сочетающую эффективность Proof-of-Stake с безопасностью Proof-of-Work (Scrypt). Это позволяет достичь идеального баланса между производительностью и защитой от атак.'
+            description: 'Гибридный консенсус',
+            description: 'Гибридная система Proof-of-Work/Proof-of-Stake обеспечивает максимальную защиту сети. Двойной механизм консенсуса предотвращает атаки и гарантирует целостность всех транзакций и блоков.'
           },
           {
             icon: '🔐',
             title: 'Приватные транзакции',
-            description: 'В отличие от Bitcoin, NovaCoin поддерживает приватные адреса по умолчанию, начинающиеся с цифры 5. Это обеспечивает конфиденциальность без необходимости использования дополнительных сервисов микширования.'
+            description: 'NovaCoin — это глобальная платёжная сеть. Она поддерживает приватные транзакции без необходимости использования мастернод или сервисов микширования для адресов, начинающихся с 5.'
+          },
+          {
+            icon: '💎',
+            title: 'Уникальная модель эмиссии',
+            description: 'Несмотря на более частую генерацию блоков, чем у Bitcoin, NovaCoin использует другую модель эмиссии с меньшими вознаграждениями. Это создано для обеспечения дефицита и повышения соотношения запаса к потоку монеты.'
           },
           {
             icon: '🌱',
@@ -1962,36 +1864,13 @@ footer {
           {
             icon: '💸',
             title: 'Низкие комиссии',
-            description: 'Комиссия за транзакцию составляет всего 0.001 NVC - одна из самых низких на рынке. Это делает NovaCoin практичным средством для микротранзакций и повседневных платежей.'
-          },
-          {
-            icon: '📈',
-            title: 'Долгосрочная стоимость',
-            description: 'Уникальная модель эмиссии NovaCoin разработана для обеспечения долгосрочного роста ценности. Ограниченное предложение и механизм стейкинга создают экономику дефицита.'
+            description: 'Стандартная комиссия — всего 0.001 NVC, а транзакции до 1 KB без OP_RETURN и выходов менее 0.01 NVC для монет с более чем 144 подтверждениями, проходят без комиссии. Это делает NovaCoin практичным средством для повседневных платежей.'
           },
           {
             icon: '🌐',
-            title: 'Open Source и децентрализация',
+            title: 'Открытый исходный код и децентрализация',
             description: 'NovaCoin - это полностью открытый проект, позволяющий любому разработчику вносить вклад в его развитие. Полная децентрализация исключает риск потери средств из-за действий центральных органов.'
           }
-        ]
-      },
-      advantages: {
-        en: [
-          { icon: '⚡', title: 'Fast Transactions', description: 'Instant transfers with minimal fee of 0.001 NVC. Transactions are confirmed in minutes thanks to the hybrid PoW/PoS system, ensuring rapid payments for all users.' },
-          { icon: '🔒', title: 'Security', description: 'Hybrid Proof-of-Work/Proof-of-Stake system ensures maximum network protection. Dual consensus mechanism prevents attacks and guarantees blockchain integrity.' },
-          { icon: '🌱', title: 'Energy Efficient', description: 'Proof-of-Stake reduces energy consumption compared to pure Proof-of-Work. NovaCoin consumes significantly less electricity than traditional cryptocurrencies, caring for the environment.' },
-          { icon: '🔐', title: 'Privacy', description: 'Support for private transactions without additional services. Addresses starting with 5 ensure sender and receiver confidentiality in every transaction.' },
-          { icon: '📈', title: 'Value &amp; Scarcity', description: 'Unique emission model ensures long-term value. Limited supply and staking mechanism maintain NVC\'s growing worth over time.' },
-          { icon: '🌐', title: 'Decentralization', description: 'Open-source decentralized global payment network. NovaCoin is fully decentralized and not subject to central authority control.' }
-        ],
-        ru: [
-          { icon: '⚡', title: 'Быстрые транзакции', description: 'Мгновенные переводы с минимальной комиссией 0.001 NVC. Транзакции подтверждаются за считанные минуты благодаря гибридной системе PoW/PoS, обеспечивая быстрые платежи для всех пользователей.' },
-          { icon: '🔒', title: 'Безопасность', description: 'Гибридная система Proof-of-Work/Proof-of-Stake обеспечивает максимальную защиту сети. Двойной механизм консенсуса предотвращает атаки и гарантирует целостность всех транзакций и блоков.' },
-          { icon: '🌱', title: 'Энергоэффективность', description: 'Proof-of-Stake снижает энергопотребление по сравнению с чистым Proof-of-Work. NovaCoin потребляет значительно меньше электроэнергии, чем традиционные криптовалюты, забо́тясь об окружающей среде.' },
-          { icon: '🔐', title: 'Приватность', description: 'Поддержка приватных транзакций без дополнительных сервисов. Адреса начинающиеся с 5 обеспечивают конфиденциальность отправителя и получателя в каждой транзакции.' },
-          { icon: '📈', title: 'Дефицит и ценность', description: 'Уникальная модель эмиссии обеспечивает долгосрочную ценность. Ограниченное предложение и механизм стейкинга поддерживают растущую стоимость NVC на протяжении времени.' },
-          { icon: '🌐', title: 'Децентрализация', description: 'Открытая глобальная платёжная сеть с открытым исходным кодом. NovaCoin полностью децентрализована и не подвержена контролю со стороны центральных органов или корпораций.' }
         ]
       },
       specs: {
@@ -2112,8 +1991,6 @@ footer {
     // Render Content
     function renderContent() {
       renderFeatures();
-      renderWhyNovacoin();
-      renderAdvantages();
       renderSpecs();
       renderContracts();
       renderExchanges();
@@ -2214,29 +2091,6 @@ footer {
           <span class="feature-icon">${feature.icon}</span>
           <h3 class="feature-title">${feature.title}</h3>
           <p class="feature-description">${feature.description}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderWhyNovacoin() {
-      const container = document.getElementById('whyNovaGrid');
-      if (!container) return;
-      container.innerHTML = data.whyNovacoin[currentLang].map(item => `
-        <div class="feature-card">
-          <span class="feature-icon">${item.icon}</span>
-          <h3 class="feature-title">${item.title}</h3>
-          <p class="feature-description">${item.description}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderAdvantages() {
-      const container = document.getElementById('advantagesGrid');
-      container.innerHTML = data.advantages[currentLang].map((adv, index) => `
-        <div class="advantage-card" style="transition-delay: ${index * 0.1}s">
-          <span class="advantage-icon">${adv.icon}</span>
-          <h3 class="advantage-title">${adv.title}</h3>
-          <p class="advantage-description">${adv.description}</p>
         </div>
       `).join('');
     }
