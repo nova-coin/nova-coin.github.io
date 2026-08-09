@@ -1,2397 +1,548 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaCoin - Hybrid PoW/PoS Cryptocurrency</title>
-  <link rel="icon" href="favicon.ico">
-  <style>
-    :root {
-  /* Primitive Color Tokens */
-  --color-white: rgba(255, 255, 255, 1);
-  --color-black: rgba(0, 0, 0, 1);
-  --color-cream-50: rgba(252, 252, 249, 1);
-  --color-cream-100: rgba(255, 255, 253, 1);
-  --color-gray-200: rgba(245, 245, 245, 1);
-  --color-gray-300: rgba(167, 169, 169, 1);
-  --color-gray-400: rgba(119, 124, 124, 1);
-  --color-slate-500: rgba(98, 108, 113, 1);
-  --color-brown-600: rgba(94, 82, 64, 1);
-  --color-charcoal-700: rgba(31, 33, 33, 1);
-  --color-charcoal-800: rgba(38, 40, 40, 1);
-  --color-slate-900: rgba(19, 52, 59, 1);
-  --color-teal-300: rgba(50, 184, 198, 1);
-  --color-teal-400: rgba(45, 166, 178, 1);
-  --color-teal-500: rgba(33, 128, 141, 1);
-  --color-teal-600: rgba(29, 116, 128, 1);
-  --color-teal-700: rgba(26, 104, 115, 1);
-  --color-teal-800: rgba(41, 150, 161, 1);
-  --color-red-400: rgba(255, 84, 89, 1);
-  --color-red-500: rgba(192, 21, 47, 1);
-  --color-orange-400: rgba(230, 129, 97, 1);
-  --color-orange-500: rgba(168, 75, 47, 1);
-
-  /* RGB versions for opacity control */
-  --color-brown-600-rgb: 94, 82, 64;
-  --color-teal-500-rgb: 33, 128, 141;
-  --color-slate-900-rgb: 19, 52, 59;
-  --color-slate-500-rgb: 98, 108, 113;
-  --color-red-500-rgb: 192, 21, 47;
-  --color-red-400-rgb: 255, 84, 89;
-  --color-orange-500-rgb: 168, 75, 47;
-  --color-orange-400-rgb: 230, 129, 97;
-
-  /* Background color tokens (Light Mode) */
-  --color-bg-1: rgba(59, 130, 246, 0.08);
-  --color-bg-2: rgba(245, 158, 11, 0.08);
-  --color-bg-3: rgba(34, 197, 94, 0.08);
-  --color-bg-4: rgba(239, 68, 68, 0.08);
-  --color-bg-5: rgba(147, 51, 234, 0.08);
-  --color-bg-6: rgba(249, 115, 22, 0.08);
-  --color-bg-7: rgba(236, 72, 153, 0.08);
-  --color-bg-8: rgba(6, 182, 212, 0.08);
-
-  /* Semantic Color Tokens (Light Mode) */
-  --color-background: var(--color-cream-50);
-  --color-surface: var(--color-cream-100);
-  --color-text: var(--color-slate-900);
-  --color-text-secondary: var(--color-slate-500);
-  --color-primary: var(--color-teal-500);
-  --color-primary-hover: var(--color-teal-600);
-  --color-primary-active: var(--color-teal-700);
-  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
-  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
-  --color-btn-primary-text: var(--color-cream-50);
-  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
-  --color-error: var(--color-red-500);
-  --color-success: var(--color-teal-500);
-  --color-warning: var(--color-orange-500);
-  --color-info: var(--color-slate-500);
-  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
-  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
-
-  /* Custom theme variables */
-  --gradient-bg: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
-  --gradient-accent: linear-gradient(135deg, #0066ff 0%, #7b2cbf 100%);
-  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --glow-color: rgba(0, 102, 255, 0.3);
-
-  /* Typography */
-  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-size-base: 14px;
-  --font-size-lg: 16px;
-  --font-size-xl: 18px;
-  --font-size-2xl: 20px;
-  --font-size-3xl: 24px;
-  --font-size-4xl: 30px;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 550;
-  --font-weight-bold: 600;
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.5;
-
-  /* Spacing */
-  --space-8: 8px;
-  --space-12: 12px;
-  --space-16: 16px;
-  --space-20: 20px;
-  --space-24: 24px;
-  --space-32: 32px;
-  --space-48: 48px;
-  --space-64: 64px;
-
-  /* Border Radius */
-  --radius-sm: 6px;
-  --radius-base: 8px;
-  --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 9999px;
-
-  /* Animation */
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
-  --duration-slow: 500ms;
-  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Coin glow colors */
-  --coin-glow-light: rgba(33, 128, 141, 0.4);
-  --coin-glow-dark: rgba(0, 212, 255, 0.6);
-}
-
-[data-theme="dark"] {
-  --color-gray-400-rgb: 119, 124, 124;
-  --color-teal-300-rgb: 50, 184, 198;
-  --color-gray-300-rgb: 167, 169, 169;
-  --color-gray-200-rgb: 245, 245, 245;
-
-  /* Background color tokens (Dark Mode) */
-  --color-bg-1: rgba(29, 78, 216, 0.15);
-  --color-bg-2: rgba(180, 83, 9, 0.15);
-  --color-bg-3: rgba(21, 128, 61, 0.15);
-  --color-bg-4: rgba(185, 28, 28, 0.15);
-  --color-bg-5: rgba(107, 33, 168, 0.15);
-  --color-bg-6: rgba(194, 65, 12, 0.15);
-  --color-bg-7: rgba(190, 24, 93, 0.15);
-  --color-bg-8: rgba(8, 145, 178, 0.15);
-
-  --color-background: #0a0a0a;
-  --color-surface: rgba(30, 30, 46, 0.95);
-  --color-text: var(--color-gray-200);
-  --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
-  --color-primary: #00d4ff;
-  --color-primary-hover: #00b8e6;
-  --color-primary-active: #009fcc;
-  --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
-  --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
-  --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
-  --color-border: rgba(var(--color-gray-400-rgb), 0.3);
-  --color-card-border: rgba(100, 100, 255, 0.2);
-  --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
-  --color-btn-primary-text: #0a0a0a;
-
-  --gradient-bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-  --gradient-accent: linear-gradient(135deg, #00d4ff 0%, #b74dff 100%);
-  --card-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
-  --glow-color: rgba(0, 212, 255, 0.4);
-
-  --coin-glow-light: rgba(0, 212, 255, 0.6);
-  --coin-glow-dark: rgba(0, 212, 255, 0.8);
-}
-
-@font-face {
-  font-family: 'FKGroteskNeue';
-  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
-}
-
-* {
-  margin: 0.01;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: var(--font-size-base);
-}
-
-body {
-  font-family: var(--font-family-base);
-  line-height: var(--line-height-normal);
-  color: var(--color-text);
-  background: var(--gradient-bg);
-  background-attachment: fixed;
-  transition: background 0.5s var(--ease-standard), color 0.3s var(--ease-standard);
-  overflow-x: hidden;
-}
-
-/* Header Styles */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: var(--space-16) var(--space-32);
-  transition: all 0.3s var(--ease-standard);
-}
-
-header.scrolled {
-  background: rgba(var(--color-gray-200-rgb), 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="dark"] header.scrolled {
-  background: rgba(10, 10, 10, 0.85);
-  box-shadow: 0 2px 20px rgba(0, 212, 255, 0.1);
-}
-
-.header-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-32);
-}
-
-.logo {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  cursor: pointer;
-  transition: transform 0.3s var(--ease-standard);
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: var(--space-32);
-  flex: 1;
-}
-
-.nav-links {
-  display: flex;
-  gap: var(--space-32);
-  list-style: none;
-  margin: 0;
-}
-
-.nav-links a {
-  color: var(--color-text);
-  text-decoration: none;
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-lg);
-  transition: color 0.3s var(--ease-standard);
-  position: relative;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--gradient-accent);
-  transition: width 0.3s var(--ease-standard);
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-  width: 100%;
-}
-
-.nav-links a:hover {
-  color: var(--color-primary);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-16);
-}
-
-.lang-switch, .theme-toggle {
-  background: var(--color-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-base);
-  padding: var(--space-8) var(--space-16);
-  cursor: pointer;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
-  transition: all 0.3s var(--ease-standard);
-  font-family: var(--font-family-base);
-}
-
-.lang-switch:hover, .theme-toggle:hover {
-  background: var(--color-secondary-hover);
-  transform: translateY(-2px);
-}
-
-.theme-toggle {
-  font-size: var(--font-size-xl);
-  padding: var(--space-8) var(--space-12);
-}
-
-.mobile-menu-btn {
-  display: none;
-  background: var(--color-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-base);
-  padding: var(--space-8) var(--space-12);
-  font-size: var(--font-size-xl);
-  cursor: pointer;
-  color: var(--color-text);
-}
-
-/* Hero Section */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-32);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-wrapper {
-  max-width: 1400px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-64);
-  align-items: center;
-  position: relative;
-  z-index: 10;
-}
-
-.hero-content {
-  text-align: left;
-  animation: fadeInUp 3s var(--ease-standard);
-}
-
-.hero-image-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeInScale 3s var(--ease-standard);
-}
-
-.hero-coin {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  animation: rotateCoin 22s linear infinite, floatCoin 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 40px var(--coin-glow-light));
-  transition: all 0.5s var(--ease-standard);
-  will-change: transform;
-}
-
-[data-theme="dark"] .hero-coin {
-  filter: drop-shadow(0 0 60px var(--coin-glow-dark)) drop-shadow(0 0 100px rgba(0, 212, 255, 0.4));
-}
-
-.hero-coin:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 60px var(--coin-glow-light)) drop-shadow(0 0 100px rgba(33, 128, 141, 0.3));
-}
-
-[data-theme="dark"] .hero-coin:hover {
-  filter: drop-shadow(0 0 80px var(--coin-glow-dark)) drop-shadow(0 0 120px rgba(0, 212, 255, 0.5));
-}
-
-.coin-glow-ring {
-  position: absolute;
-  width: 120%;
-  height: 120%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--coin-glow-light) 0%, transparent 70%);
-  animation: pulseGlow 2s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-[data-theme="dark"] .coin-glow-ring {
-  background: radial-gradient(circle, var(--coin-glow-dark) 0%, transparent 70%);
-}
-
-.hero-title {
-  font-size: 72px;
-  font-weight: var(--font-weight-bold);
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: var(--space-24);
-  line-height: var(--line-height-tight);
-  animation: gradientShift 3s ease infinite;
-}
-
-.hero-subtitle {
-  font-size: var(--font-size-3xl);
-  color: var(--color-text);
-  margin-bottom: var(--space-16);
-  font-weight: var(--font-weight-semibold);
-}
-
-.hero-description {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-48);
-  line-height: 1.7;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: var(--space-20);
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: var(--space-16) var(--space-32);
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer;
-  transition: all 0.3s var(--ease-standard);
-  border: none;
-  text-decoration: none;
-  display: inline-block;
-  font-family: var(--font-family-base);
-}
-
-.btn-primary {
-  background: var(--gradient-accent);
-  color: var(--color-btn-primary-text);
-  box-shadow: 0 4px 15px var(--glow-color);
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 25px var(--glow-color);
-}
-
-.btn-secondary {
-  background: transparent;
-  border: 2px solid var(--color-primary);
-  color: var(--color-text);
-}
-
-.btn-secondary:hover {
-  background: var(--color-secondary);
-  transform: translateY(-3px);
-}
-
-/* Floating elements */
-.floating-shapes {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--gradient-accent);
-  opacity: 0.1;
-  animation: float 6s ease-in-out infinite;
-}
-
-.shape:nth-child(1) {
-  width: 100px;
-  height: 100px;
-  top: 20%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.shape:nth-child(2) {
-  width: 150px;
-  height: 150px;
-  top: 60%;
-  right: 10%;
-  animation-delay: 1s;
-}
-
-.shape:nth-child(3) {
-  width: 80px;
-  height: 80px;
-  bottom: 20%;
-  left: 50%;
-  animation-delay: 2s;
-}
-
-/* Section Styles */
-section {
-  padding: var(--space-64) var(--space-32);
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.section-title {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  text-align: center;
-  margin-bottom: var(--space-48);
-  color: var(--color-text);
-  position: relative;
-}
-
-.section-title::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: var(--gradient-accent);
-  margin: var(--space-20) auto 0;
-  border-radius: var(--radius-full);
-}
-
-/* Features Section */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-32);
-}
-
-.feature-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-32);
-  transition: all 0.4s var(--ease-standard);
-  box-shadow: var(--card-shadow);
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.feature-card.animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px var(--glow-color);
-  border-color: var(--color-primary);
-}
-
-.feature-icon {
-  font-size: 48px;
-  margin-bottom: var(--space-20);
-  display: block;
-}
-
-.feature-title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--space-16);
-  color: var(--color-text);
-}
-
-.feature-description {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-lg);
-  line-height: 1.6;
-}
-
-/* Specs Section */
-.specs-table {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-16);
-  margin-top: var(--space-32);
-}
-
-.spec-item {
-  background: var(--color-surface);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-base);
-  padding: var(--space-20);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s var(--ease-standard);
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.spec-item.animate {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.spec-item:hover {
-  background: var(--color-bg-2);
-  transform: translateX(5px);
-}
-
-.spec-label {
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  font-size: var(--font-size-base);
-}
-
-.spec-value {
-  color: var(--color-primary);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-base);
-}
-
-/* Contracts Section */
-.contracts-section {
-  background: var(--color-bg-5);
-  border-radius: var(--radius-xl);
-  padding: var(--space-64) var(--space-32);
-}
-
-.contracts-list {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
-}
-
-.contract-item {
-  background: var(--color-surface);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  transition: all 0.3s var(--ease-standard);
-}
-
-.contract-item:hover {
-  box-shadow: 0 8px 30px var(--glow-color);
-}
-
-.contract-label {
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  margin-bottom: var(--space-12);
-  font-size: var(--font-size-lg);
-}
-
-.contract-address {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-  background: var(--color-secondary);
-  padding: var(--space-12) var(--space-16);
-  border-radius: var(--radius-base);
-  font-family: monospace;
-  font-size: var(--font-size-base);
-  color: var(--color-text-secondary);
-  word-break: break-all;
-}
-
-.copy-btn {
-  background: var(--color-primary);
-  border: none;
-  color: var(--color-btn-primary-text);
-  padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  transition: all 0.3s var(--ease-standard);
-  white-space: nowrap;
-  font-family: var(--font-family-base);
-}
-
-.copy-btn:hover {
-  background: var(--color-primary-hover);
-  transform: scale(1.05);
-}
-
-.copy-btn.copied {
-  background: var(--color-success);
-}
-
-/* Getting Started Section */
-.getting-started-content {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.getting-started-description {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-32);
-  line-height: 1.7;
-}
-
-/* Explorers Section */
-.explorers-section {
-  background: var(--color-bg-3);
-  border-radius: var(--radius-xl);
-  padding: var(--space-64) var(--space-32);
-}
-
-.explorers-description {
-  text-align: center;
-  font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-48);
-  line-height: 1.7;
-}
-
-.exchanges-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--space-24);
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.exchange-card {
-  background: var(--color-surface);
-  border: 2px solid var(--color-card-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-32);
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.4s var(--ease-standard);
-  text-decoration: none;
-  color: var(--color-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  min-height: 120px;
-  box-shadow: var(--card-shadow);
-}
-
-.exchange-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 50px var(--glow-color);
-  border-color: var(--color-primary);
-}
-
-/* Footer */
-footer {
-  background: var(--gradient-accent);
-  color: var(--color-btn-primary-text);
-  padding: var(--space-64) var(--space-32) var(--space-32);
-  text-align: center;
-  margin-top: var(--space-64);
-}
-
-.footer-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-32);
-}
-
-.footer-social {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-24);
-}
-
-.footer-social-title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  margin: 0;
-}
-
-.social-links {
-  display: flex;
-  gap: var(--space-20);
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.social-link {
-  position: relative;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: all 0.3s var(--ease-standard);
-  border: 2px solid transparent;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.social-link:hover {
-  transform: scale(1.15) translateY(-3px);
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.social-link svg {
-  width: 24px;
-  height: 24px;
-  fill: var(--color-btn-primary-text);
-  transition: all 0.3s var(--ease-standard);
-}
-
-.social-link:hover svg {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-}
-
-.social-tooltip {
-  position: absolute;
-  bottom: 120%;
-  left: 50%;
-  transform: translateX(-50%) scale(0.8);
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: var(--space-8) var(--space-12);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s var(--ease-standard);
-  z-index: 1000;
-}
-
-.social-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: rgba(0, 0, 0, 0.9);
-}
-
-.social-link:hover .social-tooltip {
-  opacity: 1;
-  transform: translateX(-50%) scale(1);
-}
-
-.footer-links {
-  display: flex;
-  gap: var(--space-24);
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: var(--space-20) 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.footer-link {
-  color: var(--color-btn-primary-text);
-  text-decoration: none;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  transition: all 0.3s var(--ease-standard);
-  position: relative;
-}
-
-.footer-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--color-btn-primary-text);
-  transition: width 0.3s var(--ease-standard);
-}
-
-.footer-link:hover {
-  opacity: 0.8;
-  transform: translateY(-2px);
-}
-
-.footer-link:hover::after {
-  width: 100%;
-}
-
-.footer-text {
-  font-size: var(--font-size-base);
-  margin: 0;
-  opacity: 0.9;
-}
-
-.section-description {
-  text-align: center;
-  font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
-  max-width: 800px;
-  margin: 0 auto var(--space-32);
-  line-height: 1.7;
-}
-
-/* Wallets Page Styles */
-.wallet-warning {
-  background: var(--color-bg-3);
-  border: 2px solid var(--color-success);
-  border-radius: var(--radius-lg);
-  padding: var(--space-20);
-  text-align: center;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  margin-bottom: var(--space-48);
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.wallet-categories {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-16);
-  margin-bottom: var(--space-48);
-  flex-wrap: wrap;
-}
-
-.category-btn {
-  padding: var(--space-12) var(--space-32);
-  border: 2px solid var(--color-border);
-  background: var(--color-surface);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  cursor: pointer;
-  transition: all 0.3s var(--ease-standard);
-  font-family: var(--font-family-base);
-}
-
-.category-btn:hover {
-  background: var(--color-secondary);
-  transform: translateY(-2px);
-}
-
-.category-btn.active {
-  background: var(--gradient-accent);
-  color: var(--color-btn-primary-text);
-  border-color: transparent;
-  box-shadow: 0 4px 15px var(--glow-color);
-}
-
-.wallets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--space-32);
-  margin-top: var(--space-32);
-}
-
-.wallet-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-32);
-  transition: all 0.4s var(--ease-standard);
-  box-shadow: var(--card-shadow);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-}
-
-.wallet-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px var(--glow-color);
-  border-color: var(--color-primary);
-}
-
-.wallet-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-16);
-}
-
-.wallet-icon {
-  font-size: 48px;
-  filter: drop-shadow(0 4px 8px var(--glow-color));
-}
-
-.wallet-name {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  margin: 0;
-}
-
-.wallet-description {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-}
-
-.wallet-platforms {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-}
-
-.platform-tag {
-  background: var(--color-bg-1);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: var(--space-6) var(--space-12);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
-}
-
-.wallet-features {
-  list-style: none;
-  padding: 0;
-  margin: var(--space-16) 0 0 0;
-}
-
-.wallet-features li {
-  padding: var(--space-8) 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-}
-
-.wallet-features li::before {
-  content: '✓';
-  color: var(--color-success);
-  font-weight: bold;
-  font-size: var(--font-size-lg);
-}
-
-.wallet-standard {
-  background: var(--color-bg-5);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-base);
-  padding: var(--space-8) var(--space-12);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-primary);
-  display: inline-block;
-}
-
-/* Exchanges Page Styles */
-
-
-.exchanges-list-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--space-24);
-  margin-top: var(--space-32);
-}
-
-.exchange-card-detail {
-  background: var(--color-surface);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-32);
-  transition: all 0.4s var(--ease-standard);
-  box-shadow: var(--card-shadow);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
-}
-
-.exchange-card-detail:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px var(--glow-color);
-  border-color: var(--color-primary);
-}
-
-.exchange-header {
-  text-align: center;
-}
-
-.exchange-name {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text);
-  margin: 0 0 var(--space-12) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-12);
-}
-
-.exchange-icon {
-  font-size: 32px;
-}
-
-.exchange-description {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-  margin-bottom: var(--space-16);
-}
-
-
-
-.trading-pairs {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-  margin: var(--space-16) 0;
-}
-
-.pair-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--color-bg-1);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-base);
-  padding: var(--space-12) var(--space-16);
-  text-decoration: none;
-  transition: all 0.3s var(--ease-standard);
-}
-
-.pair-link:hover {
-  background: var(--color-bg-2);
-  border-color: var(--color-primary);
-  transform: translateX(4px);
-}
-
-.pair-tag {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-}
-
-.pair-arrow {
-  font-size: var(--font-size-lg);
-  color: var(--color-primary);
-  transition: transform 0.3s var(--ease-standard);
-}
-
-.pair-link:hover .pair-arrow {
-  transform: translateX(4px);
-}
-
-
-
-.trade-btn {
-  padding: var(--space-16) var(--space-32);
-  background: var(--gradient-accent);
-  color: var(--color-btn-primary-text);
-  border: none;
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer;
-  transition: all 0.3s var(--ease-standard);
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  box-shadow: 0 4px 15px var(--glow-color);
-  font-family: var(--font-family-base);
-}
-
-.trade-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 25px var(--glow-color);
-}
-
-
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-30px) rotate(180deg);
-  }
-}
-
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes rotateCoin {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
-}
-
-@keyframes floatCoin {
-  0%, 100% {
-    transform: translateY(0px) rotateY(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotateY(180deg);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .hero-wrapper {
-    grid-template-columns: 1fr;
-    gap: var(--space-48);
-  }
-
-  .hero-content {
-    text-align: center;
-  }
-
-  .hero-buttons {
-    justify-content: center;
-  }
-
-  .hero-image-container {
-    order: 2;
-  }
-
-  .hero-coin {
-    max-width: 350px;
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--color-surface);
-    flex-direction: column;
-    padding: var(--space-20);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-
-  .mobile-menu-btn {
-    display: block;
-  }
-
-  .hero-title {
-    font-size: 48px;
-  }
-
-  .hero-subtitle {
-    font-size: var(--font-size-2xl);
-  }
-
-  .hero-description {
-    font-size: var(--font-size-lg);
-  }
-
-  .section-title {
-    font-size: var(--font-size-3xl);
-  }
-
-  .features-grid,
-  .specs-table,
-  .exchanges-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .header-content {
-    flex-wrap: wrap;
-  }
-
-  nav {
-    order: 3;
-    width: 100%;
-    position: relative;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-title {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .contract-address {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .copy-btn {
-    width: 100%;
-  }
-
-  section {
-    padding: var(--space-48) var(--space-20);
-  }
-
-  .wallets-grid,
-  .exchanges-list-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .wallet-categories {
-    flex-direction: column;
-  }
-
-  .category-btn {
-    width: 100%;
-  }
-
-
-}
-  </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>NovaCoin (NVC) — Hybrid PoW/PoS · Smooth Emission</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico">
+    <style>
+        :root {
+            --accent: rgb(255, 150, 0);
+            --accent-light: rgba(255,150,0,0.1);
+            --bg: #ffffff;
+            --text: #222;
+            --muted: #666;
+            --card-bg: #f8f8f8;
+            --border: #e0e0e0;
+        }
+        html, body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Rubik', system-ui, -apple-system, sans-serif;
+            margin: 0; padding: 0;
+        }
+        header {
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border); padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo-area { display:flex; align-items:center; gap:0.6rem; text-decoration:none; color:var(--text); }
+        .logo-img { height:40px; width:auto; }
+        .logo-text { font-size:1.5rem; font-weight:600; letter-spacing:-0.5px; }
+        .lang-switch { display:flex; gap:0.5rem; background:var(--card-bg); border-radius:8px; padding:0.25rem; border:1px solid var(--border); }
+        .lang-btn { padding:0.4rem 1rem; border-radius:6px; border:none; background:transparent; font-weight:500; cursor:pointer; font-family:inherit; font-size:0.9rem; color:var(--muted); }
+        .lang-btn.active { background:var(--accent); color:#fff; }
+
+        .container { max-width:1200px; margin:0 auto; padding:2rem; box-sizing:border-box; }
+
+        .hero { display:flex; flex-wrap:wrap; gap:2rem; align-items:center; justify-content:space-between; margin-bottom:2rem; }
+        .hero-left { flex:1; min-width:280px; }
+        .hero-left h1 { font-size:2.5rem; font-weight:700; }
+        .hero-left .sub { font-size:1.1rem; color:var(--muted); margin-top:0.5rem; }
+        .hero-links { display:flex; gap:1rem; margin-top:1.5rem; }
+        .hero-logo { flex-shrink:0; width:180px; }
+        .hero-logo img { width:100%; height:auto; }
+        @media (max-width: 768px) {
+            .hero-logo { display:none; }
+            .hero { flex-direction:column; align-items:flex-start; }
+        }
+
+        .btn { display:inline-block; padding:0.7rem 1.6rem; border-radius:8px; font-weight:600; text-decoration:none; transition:0.2s; font-family:inherit; border:1px solid transparent; cursor:pointer; font-size:0.95rem; text-align:center; }
+        .btn-accent { background:var(--accent); color:#fff; }
+        .btn-accent:hover { background:rgb(235,140,0); }
+        .btn-outline { border-color:var(--border); color:var(--text); background:#fff; }
+        .btn-outline:hover { border-color:var(--accent); color:var(--accent); }
+
+        .section-title { font-size:1.8rem; font-weight:600; margin:2.5rem 0 1.5rem; }
+
+        .features-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:2rem; margin-bottom:3rem; }
+        .feature-card { background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:1.5rem; }
+
+        /* Slider */
+        .slider-container { position:relative; display:flex; align-items:center; margin-bottom:1rem; }
+        .slider-btn { background:transparent; border:none; font-size:1.5rem; font-weight:300; cursor:pointer; color:var(--muted); transition:0.2s; flex-shrink:0; padding:0 0.5rem; }
+        .slider-btn:hover { color:var(--accent); }
+        .slider-btn:disabled { opacity:0.3; pointer-events:none; }
+        .slider-slides { flex:1; margin:0 1rem; overflow:hidden; }
+        .slider-track { display:flex; transition:transform 0.3s ease; }
+        .slider-slide { min-width:100%; padding:1.5rem; background:var(--card-bg); border:1px solid var(--border); border-radius:12px; box-sizing:border-box; }
+        .slider-slide h3 { margin-top:0; }
+        .slider-dots { display:flex; justify-content:center; gap:0.5rem; margin-bottom:2rem; }
+        .dot { width:10px; height:10px; border-radius:50%; background:var(--border); cursor:pointer; }
+        .dot.active { background:var(--accent); }
+
+        /* Tabs */
+        .tabs { display:flex; gap:0; margin-bottom:-1px; }
+        .tab-btn { padding:0.75rem 1.5rem; border:1px solid var(--border); border-bottom:none; background:var(--card-bg); border-radius:12px 12px 0 0; cursor:pointer; font-weight:500; font-family:inherit; font-size:0.95rem; margin-right:4px; transition:0.15s; }
+        .tab-btn.active { background:#fff; border-color:var(--border); border-bottom:1px solid #fff; color:var(--accent); font-weight:600; }
+        .tab-content { border:1px solid var(--border); background:#fff; border-radius:0 12px 12px 12px; padding:1.5rem; }
+        .tab-pane { display:none; }
+        .tab-pane.active { display:block; }
+        .tab-item { display:flex; align-items:center; justify-content:space-between; padding:1rem; background:var(--card-bg); border-radius:12px; border:1px solid var(--border); margin-bottom:0.75rem; }
+        .tab-item .item-name { font-weight:600; }
+        .tab-item .item-desc { color:var(--muted); font-size:0.9rem; }
+
+        .spec-table { width:100%; border-collapse:collapse; background:var(--card-bg); border-radius:12px; overflow:hidden; margin-bottom:2rem; }
+        .spec-table td { padding:0.9rem 1.2rem; border-bottom:1px solid var(--border); font-size:0.95rem; }
+        .spec-table tr:last-child td { border-bottom:none; }
+        .spec-label { font-weight:500; color:var(--muted); width:40%; }
+        .spec-value { font-weight:600; }
+
+        .token-section { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; }
+        .token-item { margin-bottom:1.5rem; }
+        .token-item:last-child { margin-bottom:0; }
+        .token-label { font-weight:600; margin-bottom:0.5rem; }
+        .address-box { display:flex; align-items:center; gap:1rem; background:#fff; border:1px solid var(--border); border-radius:8px; padding:0.8rem 1rem; font-family:'Courier New',monospace; font-size:0.9rem; word-break:break-all; }
+        .copy-btn { background:var(--accent); border:none; color:#fff; padding:0.4rem 1rem; border-radius:6px; cursor:pointer; font-weight:500; font-family:inherit; transition:0.15s; white-space:nowrap; }
+        .copy-btn:hover { background:rgb(235,140,0); }
+        .copy-btn.copied { background:#64748b; }
+
+        .term { border-bottom:1px dashed var(--accent); cursor:help; position:relative; display:inline-block; }
+        .term:hover::after { content:attr(data-tooltip); position:absolute; bottom:130%; left:50%; transform:translateX(-50%); background:#1e293b; color:#f1f5f9; padding:0.5rem 0.9rem; border-radius:6px; font-size:0.8rem; white-space:nowrap; font-weight:400; z-index:50; pointer-events:none; }
+
+        footer { text-align:center; padding:2rem; color:var(--muted); border-top:1px solid var(--border); margin-top:3rem; font-size:0.9rem; }
+        .social-links { display:flex; gap:1rem; justify-content:center; margin-top:0.8rem; flex-wrap:wrap; }
+        .social-links a { color:var(--muted); text-decoration:none; font-weight:500; }
+        .social-links a:hover { color:var(--accent); }
+
+        [data-lang] { display:none; }
+        [data-lang].active { display:block; }
+        span[data-lang].active, a[data-lang].active, h1[data-lang].active, p[data-lang].active, div[data-lang].active { display:inline-block; }
+        td[data-lang].active { display:table-cell; }
+
+        /* Скрываем select по умолчанию, показываем только на мобильных */
+        .tab-select { display: none; }
+        @media (max-width: 600px) {
+            .tabs .tab-btn { display: none; }
+            .tabs .tab-select { display: block; width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); font-family: inherit; font-size: 1rem; margin-bottom: 0.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <header id="header">
-    <div class="header-content">
-      <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">NovaCoin</div>
-      <nav>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#home" class="nav-link active" data-en="Home" data-ru="Главная">Home</a></li>
-          <li><a href="#features" class="nav-link" data-en="Features" data-ru="Особенности">Features</a></li>
-          <li><a href="#specs" class="nav-link" data-en="Specs" data-ru="Спецификация">Specs</a></li>
-          <li><a href="#start" class="nav-link" data-en="Get Started" data-ru="Начать">Get Started</a></li>
-          <li><a href="#wallets" class="nav-link" data-en="Wallets" data-ru="Кошельки">Wallets</a></li>
-          <li><a href="#exchanges" class="nav-link" data-en="Exchanges" data-ru="Биржи">Exchanges</a></li>
-          <li><a href="#explorers" class="nav-link" data-en="Explorers" data-ru="Эксплореры">Explorers</a></li>
-          <li><a href="https://miningpoolstats.stream/novacoin" target="_blank" data-en="Pools" data-ru="Пулы">Pools</a></li>
-        </ul>
-      </nav>
-      <div class="header-actions">
-        <button class="lang-switch" id="langSwitch">EN</button>
-        <button class="theme-toggle" id="themeToggle">🌙</button>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-      </div>
-    </div>
-  </header>
-
-  <section class="hero" id="home">
-    <div class="floating-shapes">
-      <div class="shape"></div>
-      <div class="shape"></div>
-      <div class="shape"></div>
-    </div>
-    <div class="hero-wrapper">
-      <div class="hero-content">
-        <h1 class="hero-title">NovaCoin</h1>
-        <h2 class="hero-subtitle" data-en="First Cryptocurrency Based on Hybrid Scrypt Proof-of-Work / Proof-of-Stake" data-ru="Первая криптовалюта на основе гибридного Scrypt Proof-of-Work / Proof-of-Stake">First Cryptocurrency Based on Hybrid Scrypt Proof-of-Work / Proof-of-Stake</h2>
-        <p class="hero-description" data-en="Near-zero cost payments with enhanced energy efficiency" data-ru="Переводы с почти нулевой комиссией и повышенная энергоэффективность">Near-zero cost payments with enhanced energy efficiency</p>
-        <div class="hero-buttons">
-          <a href="#start" class="btn btn-primary" data-en="Get Started" data-ru="Начать">Get Started</a>
-          <a href="#features" class="btn btn-secondary" data-en="Learn More" data-ru="Узнать больше">Learn More</a>
-        </div>
-      </div>
-      <div class="hero-image-container">
-        <div class="coin-glow-ring"></div>
-        <svg class="hero-coin" id="heroCoin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1984.4 2021.6" width="1984.4" height="2021.6"><style>.st0{fill:#f2c869}.st1{fill:#efd98b}.st2{fill:#e1ab4c}.st3{fill:#ffd97a}.st4{fill:#fac04a}.st5{fill:#f4ce83}.st6{fill:#ffda7f}.st7{fill:#e8c278}.st8{fill:#ffd166}.st9{fill:#e0c390}</style><title>nvc</title><g id="Laag_2"><path class="st0" d="M1391.5 0c-327.4 0-592.9 92.9-592.9 207.6v184.2c31.7 66.1 255.6 149.7 592.9 149.7s561.1-83.8 592.8-149.7V207.6C1984.4 92.9 1719 0 1391.5 0z"/><path class="st1" d="M173.8 1637.4l-8.4-17.3v-20.6c-35.7 26.7-56.3 56.4-56.3 88.2v184.2c31.7 66.1 255.6 149.7 592.9 149.7s561.1-83.8 592.9-149.7v-95.6c-119.6 37.2-277.3 59-452 59-338-.4-613.2-81.5-669.1-197.9z"/><path class="st2" d="M249.4 1547.1v53.7c31.7 66.1 255.6 149.7 592.9 149.7s561.1-83.8 592.9-149.7v-184.2c-.4-13.5-4.2-26.8-11-38.5v28.8l-8.4 17.4c-56 116.3-330.7 197.5-668.9 197.5-197.4 0-373.5-28.1-497.5-74.7z"/><path class="st3" d="M1185.7 1101V916.9c0-114.6-265.5-207.6-592.9-207.6S0 802.2 0 916.9v184.2c31.6 66.1 255.6 149.7 592.9 149.7s561.2-83.9 592.8-149.8z"/><path class="st4" d="M1270.2 1105.6v14.9l-8.4 17.3c-56 116.3-330.7 197.5-668.9 197.5-167.9 0-320.4-20.1-438-54.6v107c31.7 66.1 255.6 149.7 592.9 149.7s561.1-83.8 592.9-149.7v-184.3c0-35.4-25.7-68.8-70.5-97.8z"/><path class="st5" d="M798.7 506v131.4c179.1 22 340.7 73.9 419.8 158.6 53.6 5 111.5 7.8 173.1 7.8 337.2 0 561.1-83.8 592.8-149.7V506c-123.7 79.1-359.3 120-592.9 120s-469.1-40.9-592.8-120z"/><path class="st6" d="M1266.6 884.2c2.3 10.9 3.5 22 3.5 33.1v92.5c30.8 15 59.6 33.9 85.5 56.2h35.8c337.2 0 561.1-83.8 592.8-149.7v-148c-123.7 79.2-359.2 120.1-592.8 120.1-41.6-.2-83.7-1.5-124.8-4.2z"/><path class="st7" d="M1425.1 1203.5v54.1c26.4 18.2 49.2 41.3 67.1 67.9 280.6-14.6 463.8-88.2 492.2-146.9v-148.2c-119.5 76.4-343.2 117.1-568.7 119.7 6.1 17.1 9.3 35.2 9.4 53.4z"/><path class="st8" d="M1520 1416.6v169.5c264.6-17.9 436.9-88.2 464.3-145.4V1293c-101.1 64.6-276.7 103.7-465 115.9.3 2.4.7 5.4.7 7.7z"/><path class="st9" d="M1379.2 1744.3V1869h12.3c327.4 0 592.8-92.9 592.8-207.6v-106.7c-106.8 68.3-297.6 108.1-497.6 117.7-30.8 30.7-67.4 55.1-107.5 71.9z"/></g></svg>
-      </div>
-    </div>
-  </section>
-
-  <section id="features">
-    <h2 class="section-title" data-en="Features" data-ru="Особенности">Features</h2>
-    <div class="features-grid" id="featuresGrid"></div>
-  </section>
-
-  <section id="specs">
-    <h2 class="section-title" data-en="Specifications" data-ru="Спецификация">Specifications</h2>
-    <div class="specs-table" id="specsTable"></div>
-  </section>
-
-  <section>
-    <div class="contracts-section">
-      <h2 class="section-title" data-en="BEP20 NovaCoin Token" data-ru="BEP20 NovaCoin токен">BEP20 NovaCoin Token</h2>
-      <div class="contracts-list" id="contractsList"></div>
-    </div>
-  </section>
-
-  <section id="start">
-    <div class="getting-started-content">
-      <h2 class="section-title" data-en="Getting Started is Really Easy" data-ru="Начать очень просто">Getting Started is Really Easy</h2>
-      <p class="getting-started-description" data-en="You'll just have to download one of the wallets and transfer your coins to the wallet. For tech details about NovaCoin, check our Wiki." data-ru="Вам нужно просто скачать один из кошельков и перевести ваши монеты в кошелёк. Для технических деталей о NovaCoin посетите нашу Wiki.">You'll just have to download one of the wallets and transfer your coins to the wallet. For tech details about NovaCoin, check our Wiki.</p>
-      <a href="https://github.com/novacoin-project/novacoin/wiki" target="_blank" class="btn btn-primary" data-en="NovaCoin Wiki" data-ru="NovaCoin Wiki">NovaCoin Wiki</a>
-    </div>
-  </section>
-
-  <section id="wallets">
-    <h2 class="section-title" data-en="NovaCoin Digital Wallets" data-ru="Цифровые кошельки NovaCoin">NovaCoin Digital Wallets</h2>
-    <p class="section-description" data-en="Choose the right wallet to store your NovaCoin. Available options for all platforms and devices." data-ru="Выберите подходящий кошелёк для хранения ваших NovaCoin. Доступны варианты для всех платформ и устройств.">Choose the right wallet to store your NovaCoin. Available options for all platforms and devices.</p>
-    <div class="wallet-warning" data-en="🔒 Always keep your private keys safe and secure!" data-ru="🔒 Всегда держите ваши приватные ключи в безопасности!">🔒 Always keep your private keys safe and secure!</div>
-    
-    <div class="wallet-categories">
-      <button class="category-btn active" data-category="desktop" data-en="Desktop" data-ru="Десктоп">Desktop</button>
-      <button class="category-btn" data-category="mobile" data-en="Mobile" data-ru="Мобильные">Mobile</button>
-      <button class="category-btn" data-category="web" data-en="Web" data-ru="Веб">Web</button>
-      <button class="category-btn" data-category="BEP20" data-en="BEP20" data-ru="BEP20">BEP20</button>
-    </div>
-
-    <div id="walletsGrid" class="wallets-grid"></div>
-  </section>
-
-  <section id="exchanges">
-    <h2 class="section-title" data-en="NovaCoin Trading Exchanges" data-ru="Биржи для торговли NovaCoin">NovaCoin Trading Exchanges</h2>
-    <p class="section-description" data-en="Choose a reliable exchange to buy, sell and trade NovaCoin." data-ru="Выберите надежную биржу для покупки, продажи и обмена NovaCoin.">Choose a reliable exchange to buy, sell and trade NovaCoin.</p>
-    
-    <div id="exchangesListGrid" class="exchanges-list-grid"></div>
-
-  </section>
-
-  <section id="explorers">
-    <div class="explorers-section">
-      <h2 class="section-title" data-en="Explorers" data-ru="Oбозреватели блоков">Explorers</h2>
-      <p class="explorers-description" data-en="The NovaCoin block explorer is a tool that allows users to view information about blocks, transactions, and addresses within the NovaCoin network." data-ru="Обозреватель блоков NovaCoin — это инструмент, позволяющий пользователям просматривать информацию о блоках, транзакциях и адресах в сети NovaCoin.">The NovaCoin block explorer is a tool that allows users to view information about blocks, transactions, and addresses within the NovaCoin network.</p>
-      <div class="exchanges-grid" id="exchangesGrid"></div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-social">
-        <h3 class="footer-social-title" data-en="Follow Us" data-ru="Следите за нами">Follow Us</h3>
-        <div class="social-links" id="socialLinks"></div>
-      </div>
-      <div class="footer-links">
-        <a href="#home" class="footer-link" data-en="Home" data-ru="Главная">Home</a>
-        <a href="#features" class="footer-link" data-en="Features" data-ru="Особенности">Features</a>
-        <a href="#specs" class="footer-link" data-en="Specs" data-ru="Спецификация">Specs</a>
-        <a href="#wallets" class="footer-link" data-en="Wallets" data-ru="Кошельки">Wallets</a>
-        <a href="#exchanges" class="footer-link" data-en="Exchanges" data-ru="Биржи">Exchanges</a>
-        <a href="#start" class="footer-link" data-en="Get Started" data-ru="Начать">Get Started</a>
-        <a href="#explorers" class="footer-link" data-en="Explorers" data-ru="Эксплореры">Explorers</a>
-        <a href="https://miningpoolstats.stream/novacoin" target="_blank" class="footer-link" data-en="Pools" data-ru="Пулы">Pools</a>
-      </div>
-      <p class="footer-text" data-en="&copy; 2026 NovaCoin Community. Open-source decentralized cryptocurrency." data-ru="&copy; 2026 NovaCoin. Децентрализованная криптовалюта с открытым исходным кодом.">&copy; 2026 NovaCoin Community. Open-source decentralized cryptocurrency.</p>
-    </div>
-  </footer>
-
-  <script>
-    // Data
-    const socialMedia = {
-      links: [
-        {
-          name: 'Bitcointalk.org',
-          url: 'https://bitcointalk.org/index.php?topic=5189560.0',
-          icon: '<svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"></style> <g> <path class="st10" d="M256,0C114.625,0,0,114.625,0,256c0,141.391,114.625,256,256,256s256-114.609,256-256 C512,114.625,397.375,0,256,0z M256,453.969c-109.156,0-197.969-88.813-197.969-197.969S146.844,58.031,256,58.031 S453.969,146.844,453.969,256S365.156,453.969,256,453.969z"></path> <path class="st10" d="M275.656,238.75c5.75-4.047,8.625-10.484,8.625-19.313c0-9.156-2.594-15.672-7.781-19.563 c-5.188-3.875-13.281-5.813-24.297-5.813h-22.906v50.766h21.094C261.469,244.828,269.906,242.813,275.656,238.75z"></path> <path class="st10" d="M282.906,274.031c-2.594-2.141-5.906-3.781-9.969-4.906c-4.047-1.141-8.938-1.703-14.688-1.703h-28.953v51.5 h29.078c6.063,0,11.156-0.734,15.25-2.188c4.078-1.453,7.359-3.406,9.828-5.828c2.469-2.438,4.25-5.266,5.344-8.5 s1.641-6.688,1.641-10.344c0-3.797-0.609-7.219-1.813-10.25C287.406,278.781,285.5,276.188,282.906,274.031z"></path> <path class="st10" d="M256,76.031C156.75,76.031,76.031,156.75,76.031,256S156.75,435.969,256,435.969S435.969,355.25,435.969,256 S355.25,76.031,256,76.031z M322.594,313.453c-2.844,6.328-6.969,11.766-12.406,16.344c-5.406,4.578-12.094,8.156-20.031,10.75 s-17,3.891-27.219,3.891h-3.563v17.75h-27.781v-17.75h-34.969h-11.469v-14.281c0-4.203-0.281-6.734,3.781-7.594 c0.344-0.078,0.859-0.156,1.516-0.281c0.672-0.125,1.859-0.344,3.609-0.656s-0.469-0.734,2.563-1.281V192.859 c-3.031-0.531-0.813-0.953-2.563-1.266c-1.75-0.328-2.938-0.531-3.609-0.656s-1.172-0.219-1.516-0.281 c-4.063-0.859-3.781-3.391-3.781-7.594v-14.266h11.469h34.969v-18.984h27.781v19.141c8.453,0.359,15.906,1.391,22.281,3.109 c8.141,2.188,14.828,5.313,20.031,9.359c5.25,4.047,9.063,8.953,11.484,14.703c2.438,5.75,3.641,12.219,3.641,19.422 c0,4.141-0.594,8.078-1.813,11.859c-1.219,3.75-3.094,7.281-5.656,10.563c-2.547,3.281-5.781,6.25-9.719,8.922 c-3.906,2.672-3.563,4.938-8.984,6.797c24.125,5.438,36.203,18.469,36.203,39.125C326.844,300.25,325.422,307.141,322.594,313.453z "></path> </g> </g></svg>',
-          label_en: 'Bitcointalk.org',
-          label_ru: 'Bitcointalk.org'
-        },
-        {
-          name: 'Telegram',
-          url: 'https://t.me/NovaCoin_News',
-          icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>',
-          label_en: 'Telegram',
-          label_ru: 'Telegram'
-        },
-        {
-          name: 'Discord',
-          url: 'https://discord.gg/6juXnsSkGa',
-          icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>',
-          label_en: 'Discord',
-          label_ru: 'Discord'
-        },
-        {
-          name: 'GitHub',
-          url: 'https://github.com/novacoin-project',
-          icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
-          label_en: 'GitHub Dev',
-          label_ru: 'GitHub Dev'
-        },
-        {
-          name: 'GitHub',
-          url: 'https://github.com/nova-coin',
-          icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
-          label_en: 'GitHub Community',
-          label_ru: 'GitHub Community'
-        },
-        {
-          name: 'Reddit',
-          url: 'https://reddit.com/r/NovacoinCommunity',
-          icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>',
-          label_en: 'Reddit',
-          label_ru: 'Reddit'
-        },
-        {
-          name: 'x.com',
-          url: 'https://x.com/Novacoin_NVC',
-          icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
-          label_en: 'x.com',
-          label_ru: 'x.com'
-        },
-        {
-          name: 'YouTube',
-          url: 'https://www.youtube.com/@Novacoin_NVC',
-          icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
-          label_en: 'YouTube',
-          label_ru: 'YouTube'
-        }
-      ]
-    };
-
-    const walletsData = {
-      desktop: {
-        en: [
-          {
-            name: 'NovaCoin-Qt v0.5.10-x86_64',
-            description: 'Official NovaCoin desktop wallet for Windows',
-            platforms: ['Windows 10-11 x86_64'],
-			url: 'https://github.com/novacoin-project/novacoin/releases/download/nvc-v0.5.10/v0.5.10-win32-x86_64.zip',
-            features: ['Full key control', 'Security', 'Low system requirements'],
-            icon: '💻'
-          },
-		  {
-            name: 'NovaCoin-Qt v0.5.10-aarch64',
-            description: 'Official NovaCoin desktop wallet for Windows',
-            platforms: ['Windows 10-11 aarch64'],
-			url: 'https://github.com/novacoin-project/novacoin/releases/download/nvc-v0.5.10/v0.5.10-win32-aarch64.zip',
-            features: ['Full key control', 'Security', 'Low system requirements'],
-            icon: '💻'
-          },
-		  {
-            name: 'NovaCoin-Qt v0.5.9-x86_32',
-            description: 'NovaCoin desktop wallet for Windows',
-            platforms: ['Windows XP-10 x86_32'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9_leveldb-win.zip',
-            features: ['Full key control', 'Security', 'Low system requirements'],
-            icon: '💻'
-          },
-          {
-            name: 'NovaCoin-Qt v0.5.10-x86_64',
-            description: 'NovaCoin-Qt desktop wallet for macOS',
-            platforms: ['macOS 11.7.10+'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin-qt_v0.5.10-x86_64_macos.dmg',
-            features: ['Full key control', 'Security', 'Low system requirements'],
-            icon: '🍎'
-          },
-          {
-            name: 'NovaCoin v0.5.10-x86_64',
-            description: 'Wallet for Linux Ubuntu 20+',
-            platforms: ['Ubuntu 20'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin_v0.5.10-ubuntu20.tar.xz',
-            features: ['Full key control', 'Security', 'Low system requirements'],
-            icon: '🐧'
-          },
-          {
-            name: 'NovaCoin v0.5.10-x86_64',
-            description: 'Wallet for Linux Ubuntu 18',
-            platforms: ['Ubuntu 18'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin_v0.5.10-ubuntu18.tar.xz',
-            features: ['Full key control', 'Security', 'Low system requirements'],
-            icon: '🐧'
-          }
-        ],
-        ru: [
-          {
-            name: 'NovaCoin-Qt v0.5.10-x86_64',
-            description: 'Официальный десктоп кошелёк NovaCoin для Windows',
-            platforms: ['Windows 10-11 x86_64'],
-			url: 'https://github.com/novacoin-project/novacoin/releases/download/nvc-v0.5.10/v0.5.10-win32-x86_64.zip',
-            features: ['Полный контроль ключей', 'Безопасность', 'Низкие системные требования'],
-            icon: '💻'
-          },
-		  {
-            name: 'NovaCoin-Qt v0.5.10-aarch64',
-            description: 'Официальный десктоп кошелёк NovaCoin для Windows',
-            platforms: ['Windows 10-11 aarch64'],
-			url: 'https://github.com/novacoin-project/novacoin/releases/download/nvc-v0.5.10/v0.5.10-win32-aarch64.zip',
-            features: ['Полный контроль ключей', 'Безопасность', 'Низкие системные требования'],
-            icon: '💻'
-          },
-		  {
-            name: 'NovaCoin-Qt v0.5.9-x86_32',
-            description: 'Десктопный кошелёк NovaCoin для Windows',
-            platforms: ['Windows XP-10 x86_32'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9_leveldb-win.zip',
-            features: ['Полный контроль ключей', 'Безопасность', 'Низкие системные требования'],
-            icon: '💻'
-          },
-          {
-            name: 'NovaCoin-Qt v0.5.10-x86_64',
-            description: 'Десктопный Qt кошелёк NovaCoin для macOS',
-            platforms: ['macOS 11.7.10+'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin-qt_v0.5.10-x86_64_macos.dmg',
-            features: ['Полный контроль ключей', 'Безопасность', 'Низкие системные требования'],
-            icon: '🍎'
-          },
-          {
-            name: 'NovaCoin v0.5.10-x86_64',
-            description: 'Кошелёк NovaCoin для Linux Ubuntu 20+',
-            platforms: ['Ubuntu 20'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin_v0.5.10-ubuntu20.tar.xz',
-            features: ['Полный контроль ключей', 'Безопасность', 'Низкие системные требования'],
-            icon: '🐧'
-          },
-          {
-            name: 'NovaCoin v0.5.10-x86_64',
-            description: 'Кошелёк NovaCoin для Linux Ubuntu 18',
-            platforms: ['Ubuntu 18'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin_v0.5.10-ubuntu18.tar.xz',
-            features: ['Полный контроль ключей', 'Безопасность', 'Низкие системные требования'],
-            icon: '🐧'
-          }
-        ]
-      },
-      mobile: {
-        en: [
-          {
-            name: 'NovaCoin-Qt v0.5.9-ARMv7',
-            description: 'Official mobile wallet with ARMv7a CPU support',
-            platforms: ['Android 4+'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9-android_arm.apk',
-            features: ['Sync', 'Staking', 'Full key control'],
-            icon: '📲'
-          },
-          {
-            name: 'NovaCoin-Qt v0.5.9-x86',
-            description: 'Official mobile wallet with x86 CPU support',
-            platforms: ['Android 4+'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9-android_x86.apk',
-            features: ['Sync', 'Staking', 'Full key control'],
-            icon: '📲'
-          }
-        ],
-        ru: [
-          {
-            name: 'Gemmer Android Wallet',
-            description: 'Профессиональный мобильный кошелёк для Android устройств',
-            platforms: ['Android'],
-			url: 'https://github.com/primecoin/gemmer/releases',
-            features: ['Открытый исходный код', 'Быстрые транзакции', 'Резервное копирование'],
-            icon: '📱'
-          },
-          {
-            name: 'NovaCoin-Qt v0.5.9-ARMv7',
-            description: 'Официальный мобильный кошелёк с поддержкой процессоров ARMv7a',
-            platforms: ['Android 4+'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9-android_arm.apk',
-            features: ['Синхронизация', 'Стейкинг', 'Полный контроль ключей'],
-            icon: '📲'
-          },
-          {
-            name: 'NovaCoin-Qt v0.5.9-x86',
-            description: 'Официальный мобильный кошелёк с поддержкой процессоров x86',
-            platforms: ['Android 4+'],
-			url: 'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9-android_x86.apk',
-            features: ['Синхронизация', 'Стейкинг', 'Полный контроль ключей'],
-            icon: '📲'
-          }
-        ]
-      },
-      web: {
-        en: [
-          {
-            name: 'Wally.id',
-            description: 'Universal web wallet for multiple cryptocurrencies',			
-            features: ['Multi-currency', 'Convenient', 'Secure'],
-            icon: '💰'
-          }
-        ],
-        ru: [
-          {
-            name: 'Wally.id',
-            description: 'Универсальный веб-кошелёк для множества криптовалют',
-            features: ['Мультивалютный', 'Удобный', 'Безопасный'],
-            icon: '💰'
-          }
-        ]
-      },
-      'BEP20': {
-        en: [
-          {
-            name: 'SafePal Wallet',
-            description: 'Supports NVC BEP20 tokens with high security level',
-            standard: 'NVC BEP20',
-            icon: '🛡️'
-          },
-          {
-            name: 'Trust Wallet',
-            description: 'Popular mobile wallet with NVC BEP20 support',
-            standard: 'NVC BEP20',
-            icon: '✅'
-          },
-          {
-            name: 'Gleec Wallet',
-            description: 'Wallet/dex with NVC BEP20 support',
-            standard: 'NVC BEP20',
-            icon: '🔒'
-          }
-        ],
-        ru: [
-          {
-            name: 'SafePal Wallet',
-            description: 'Поддерживает NVC BEP20 токены с высоким уровнем безопасности',
-            standard: 'NVC BEP20',
-            icon: '🛡️'
-          },
-          {
-            name: 'Trust Wallet',
-            description: 'Популярный мобильный кошелёк с поддержкой NVC BEP20',
-            standard: 'NVC BEP20',
-            icon: '✅'
-          },
-          {
-            name: 'Gleec Wallet',
-            description: 'Кошелёк/dex с поддержкой NVC BEP20',
-            standard: 'NVC BEP20',
-            icon: '🔒'
-          }
-        ]
-      }
-    };
-
-
-    const exchangesData = {
-      en: [
-        {
-          name: 'FreiExchange',
-          description: 'One of the main exchanges for NovaCoin with highest trading volume',
-          pairs: ['NVC/BTC', 'NVC/LTC'],
-          volume: 'High',
-          features: ['No KYC', 'Fast transfers', 'Low fees'],
-          url: 'https://freiexchange.com',
-          icon: '💱'
-        },
-        {
-          name: 'YoBit',
-          description: 'Large exchange with multiple trading pairs for NovaCoin',
-          pairs: ['NVC/RUR', 'NVC/USD', 'NVC/ETH', 'NVC/BTC', 'NVC/WAVES'],
-          volume: 'Medium',
-          features: ['Trade in rubles', 'Multiple pairs', 'Staking'],
-          url: 'https://yobit.net',
-          icon: '🔄'
-        }
-      ],
-      ru: [
-        {
-          name: 'FreiExchange',
-          description: 'Одна из основных бирж для торговли NovaCoin с наибольшим объёмом',
-          pairs: ['NVC/BTC', 'NVC/LTC'],
-          volume: 'Высокий',
-          features: ['Без KYC', 'Быстрые переводы', 'Низкие комиссии'],
-          url: 'https://freiexchange.com',
-          icon: '💱'
-        },
-        {
-          name: 'YoBit',
-          description: 'Крупная биржа с множеством торговых пар для NovaCoin',
-          pairs: ['NVC/RUR', 'NVC/USD', 'NVC/ETH', 'NVC/BTC', 'NVC/WAVES'],
-          volume: 'Средний',
-          features: ['Торговла на рублях', 'Множество пар', 'Стейкинг'],
-          url: 'https://yobit.net',
-          icon: '🔄'
-        }
-      ]
-    };
-
-    const data = {
-      features: {
-        en: [
-          {
-            icon: '🔗',
-            title: 'Hybrid Consensus',
-            description: 'Hybrid Proof-of-Work/Proof-of-Stake system ensures maximum network protection. Dual consensus mechanism prevents attacks and guarantees blockchain integrity.'
-          },
-          {
-            icon: '🔐',
-            title: 'Private Transactions',
-            description: 'NovaCoin is a global payment network. It supports private transactions without the need to use master nodes or mixing services for addresses starting with 5.'
-          },
-          {
-            icon: '💎',
-            title: 'Unique Emission Model',
-            description: 'Despite a more frequent block generation than Bitcoin, NovaCoin uses a different emission model with lower rewards. This is designed to ensure scarcity and enhance the stock-to-flow value of the coin.'
-          },
-          {
-            icon: '🌱',
-            title: 'Eco-Friendly',
-            description: 'Thanks to the Proof-of-Stake mechanism, NovaCoin consumes significantly less energy than traditional PoW cryptocurrencies. This makes NovaCoin an ideal choice for environmentally conscious investors.'
-          },
-          {
-            icon: '💸',
-            title: 'Low Fees',
-            description: 'Standard transaction fee is only 0.001 NVC, while transactions up to 1 KB without OP_RETURN outputs and outputs below 0.01 NVC, made from coins with more than 144 confirmations, are processed free of charge. This makes NovaCoin a practical means for everyday payments.'
-          },
-          {
-            icon: '🌐',
-            title: 'Open Source &amp; Decentralization',
-            description: 'NovaCoin is a fully open project allowing any developer to contribute to its development. Complete decentralization eliminates the risk of losing funds due to central authority actions.'
-          }
-        ],
-        ru: [
-          {
-            icon: '🔗',
-            title: 'Гибридный консенсус',
-            description: 'Гибридный консенсус',
-            description: 'Гибридная система Proof-of-Work/Proof-of-Stake обеспечивает максимальную защиту сети. Двойной механизм консенсуса предотвращает атаки и гарантирует целостность всех транзакций и блоков.'
-          },
-          {
-            icon: '🔐',
-            title: 'Приватные транзакции',
-            description: 'NovaCoin — это глобальная платёжная сеть. Она поддерживает приватные транзакции без необходимости использования мастернод или сервисов микширования для адресов, начинающихся с 5.'
-          },
-          {
-            icon: '💎',
-            title: 'Уникальная модель эмиссии',
-            description: 'Несмотря на более частую генерацию блоков, чем у Bitcoin, NovaCoin использует другую модель эмиссии с меньшими вознаграждениями. Это создано для обеспечения дефицита и повышения соотношения запаса к потоку монеты.'
-          },
-          {
-            icon: '🌱',
-            title: 'Экологичность',
-            description: 'Благодаря механизму Proof-of-Stake, NovaCoin потребляет значительно меньше энергии, чем традиционные PoW криптовалюты. Это делает NovaCoin идеальным выбором для экологически сознательных инвесторов.'
-          },
-          {
-            icon: '💸',
-            title: 'Низкие комиссии',
-            description: 'Стандартная комиссия — всего 0.001 NVC, а транзакции до 1 KB без OP_RETURN и выходов менее 0.01 NVC для монет с более чем 144 подтверждениями, проходят без комиссии. Это делает NovaCoin практичным средством для повседневных платежей.'
-          },
-          {
-            icon: '🌐',
-            title: 'Открытый исходный код и децентрализация',
-            description: 'NovaCoin - это полностью открытый проект, позволяющий любому разработчику вносить вклад в его развитие. Полная децентрализация исключает риск потери средств из-за действий центральных органов.'
-          }
-        ]
-      },
-      specs: {
-        en: [
-          { label: 'Launch Date', value: 'Feb 05, 2013' },
-          { label: 'Ticker', value: 'NVC' },
-          { label: 'Blockchain', value: 'Bitcoin-like' },
-          { label: 'Consensus Algorithm', value: 'Hybrid' },
-          { label: 'Confirmation Method', value: 'PoS + PoW' },
-          { label: 'Standard Transaction Fee', value: '0.001 NVC' },
-          { label: 'Transaction Confirmations', value: '6' },
-          { label: 'Block Confirmations', value: '520' },
-          { label: 'Max PoS Reward', value: '10 coins per block' },
-          { label: 'Min Stake Age', value: '30 days' },
-          { label: 'Max Stake Age', value: '90 days' },
-          { label: 'Target Interval PoS', value: '10 minutes' },
-          { label: 'Target Interval PoW', value: '30 minutes' },
-          { label: 'PoW Algorithm', value: 'Scrypt' },
-          { label: 'Max PoW Reward', value: '100 coins per block' },
-          { label: 'JSON-RPC Port', value: '8344' },
-          { label: 'P2P Port', value: '7777' },
-          { label: 'Network Type', value: 'Decentralized P2P' },
-          { label: 'Language', value: 'C++' }
-        ],
-        ru: [
-          { label: 'Дата запуска', value: '05.02.2013' },
-          { label: 'Тикер', value: 'NVC' },
-          { label: 'Блокчейн', value: 'Bitcoin-подобный' },
-          { label: 'Алгоритм консенсуса', value: 'Hybrid' },
-          { label: 'Метод подтверждения', value: 'PoS + PoW' },
-          { label: 'Стандартная комиссия', value: '0.001 NVC' },
-          { label: 'Подтверждений транзакции', value: '6' },
-          { label: 'Подтверждений блока', value: '520' },
-          { label: 'Макс награда PoS', value: '10 монет за блок' },
-          { label: 'Минимальный возраст стейка', value: '30 дней' },
-          { label: 'Максимальный возраст стейка', value: '90 дней' },
-          { label: 'Целевой интервал PoS', value: '10 минут' },
-          { label: 'Целевой интервал PoW', value: '30 минут' },
-          { label: 'Алгоритм PoW', value: 'Scrypt' },
-          { label: 'Макс награда PoW', value: '100 монет за блок' },
-          { label: 'JSON-RPC порт', value: '8344' },
-          { label: 'P2P порт', value: '7777' },
-          { label: 'Тип сети', value: 'Decentralized P2P' },
-          { label: 'Язык', value: 'C++' }
-        ]
-      },
-      contracts: {
-        en: [
-          { label: '<a href="https://bscscan.com/token/0xbf84720097de111a80f46f9d077643967042841a" target="_blank">BEP20 Contract Address</a>', value: '0xbf84720097de111a80f46f9d077643967042841a' },
-          { label: '<a href="https://app.safe.global/balances?safe=bnb:0xB1C2F7Abb355151BAdF47655390dD259Ddf1bf3d" target="_blank">BEP20 Safe MultiSig Address</a>', value: '0xB1C2F7Abb355151BAdF47655390dD259Ddf1bf3d' },
-          { label: '<a href="https://nova.y-chain.net/address/9EuEfZLL5tnagtMgFHtaEv2dGtZnE7cAZU" target="_blank">UTXO Proof-of-Funds MultiSig Address</a>', value: '9EuEfZLL5tnagtMgFHtaEv2dGtZnE7cAZU' },
-          { label: '<a href="https://t.me/nvc_bridge_bot" target="_blank">Telegram Bot - NovaCoin Bridge</a>', value: '@nvc_bridge_bot' }
-        ],
-        ru: [
-          { label: '<a href="https://bscscan.com/token/0xbf84720097de111a80f46f9d077643967042841a" target="_blank">BEP20 адрес контракта</a>', value: '0xbf84720097de111a80f46f9d077643967042841a' },
-          { label: '<a href="https://app.safe.global/balances?safe=bnb:0xB1C2F7Abb355151BAdF47655390dD259Ddf1bf3d" target="_blank">BEP20 Safe MultiSig адрес</a>', value: '0xB1C2F7Abb355151BAdF47655390dD259Ddf1bf3d' },
-          { label: '<a href="https://nova.y-chain.net/address/9EuEfZLL5tnagtMgFHtaEv2dGtZnE7cAZU" target="_blank">UTXO Proof-of-Funds MultiSig адрес</a>', value: '9EuEfZLL5tnagtMgFHtaEv2dGtZnE7cAZU' },
-          { label: '<a href="https://t.me/nvc_bridge_bot" target="_blank">Telegram-бот - Мост NovaCoin</a>', value: '@nvc_bridge_bot' }
-        ]
-      },
-    };
-
-    // State
-    let currentLang = 'en';
-    let currentTheme = 'dark';
-    let currentPage = 'home';
-    let currentWalletCategory = 'desktop';
-
-    // Initialize
-    function init() {
-      setupTheme();
-      setupLanguage();
-      renderContent();
-      setupEventListeners();
-      setupScrollAnimations();
-      setupNavigation();
-    }
-
-    // Theme Management
-    function setupTheme() {
-      const themeToggle = document.getElementById('themeToggle');
-      
-      // Set initial dark theme
-      document.body.setAttribute('data-theme', 'dark');
-      themeToggle.textContent = '☀️';
-      
-      themeToggle.addEventListener('click', () => {
-        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.body.setAttribute('data-theme', currentTheme);
-        themeToggle.textContent = currentTheme === 'light' ? '🌙' : '☀️';
-      });
-    }
-
-    // Language Management
-    function setupLanguage() {
-      const langSwitch = document.getElementById('langSwitch');
-      
-      langSwitch.addEventListener('click', () => {
-        currentLang = currentLang === 'en' ? 'ru' : 'en';
-        langSwitch.textContent = currentLang.toUpperCase();
-        updateLanguage();
-        renderContent();
-      });
-    }
-
-    function updateLanguage() {
-      document.querySelectorAll('[data-en]').forEach(el => {
-        const text = el.getAttribute('data-' + currentLang);
-        if (text) {
-          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-            el.placeholder = text;
-          } else {
-            el.innerHTML = text;
-          }
-        }
-      });
-    }
-
-    // Render Content
-    function renderContent() {
-      renderFeatures();
-      renderSpecs();
-      renderContracts();
-      renderExchanges();
-      renderSocialLinks();
-      renderWallets();
-      renderExchangesList();
-      renderMiningPools();
-    }
-
-    function renderWallets() {
-      const container = document.getElementById('walletsGrid');
-      const wallets = walletsData[currentWalletCategory][currentLang];
-      
-      container.innerHTML = wallets.map(wallet => `
-        <div class="wallet-card">
-          <div class="wallet-header">
-            <span class="wallet-icon">${wallet.icon}</span>
-            <h3 class="wallet-name">${wallet.name}</h3>
-          </div>
-          <p class="wallet-description">${wallet.description}</p>
-          ${wallet.platforms ? `
-            <div class="wallet-platforms">
-              ${wallet.platforms.map(platform => `<span class="platform-tag">${platform}</span>`).join('')}
-			  <a href="${wallet.url}" target="_blank" class="download-btn">⬇️</a>
-            </div>
-          ` : ''}
-          ${wallet.standard ? `<div class="wallet-standard">${wallet.standard}</div>` : ''}
-          ${wallet.features ? `
-            <ul class="wallet-features">
-              ${wallet.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
-          ` : ''}
-        </div>
-      `).join('');
-    }
-
-    function renderExchangesList() {
-      const container = document.getElementById('exchangesListGrid');
-      const exchangesList = [
-        { name: 'FreiExchange', pairs: ['NVC/BTC', 'NVC/LTC'], urls: ['https://freiexchange.com/market/NVC/BTC', 'https://freixlite.com/market/NVC/LTC'], icon: '💱' },
-        { name: 'BTC-Trade.com.ua', pairs: ['NVC/BTC'], urls: ['https://btc-trade.com.ua/stock/nvc_btc'], icon: '🔄' },
-        { name: 'CrexSoft', pairs: ['NVC/BTC'], urls: ['https://crexsoft.com/ru/trade/NVC/BTC'], icon: '💹' },
-        { name: 'XBTS DEX', pairs: ['NVC/BTC'], urls: ['https://ex.xbts.io/market/XBTSX.NVC_XBTSX.BTC'], icon: '🌐' },
-        { name: 'Gleec DEX', pairs: ['Wallet'], urls: ['https://dex.gleec.com/wallet'], icon: '🔒' },
-        { name: 'PancakeSwap DEX', pairs: ['NVC/BTCB'], urls: ['https://pancakeswap.finance/swap?outputCurrency=0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c&chainId=56&inputCurrency=0xBF84720097de111A80f46f9D077643967042841A'], icon: '🥞' }
-      ];
-      
-      container.innerHTML = exchangesList.map((exchange, index) => {
-        return `
-          <div class="exchange-card-detail">
-            <div class="exchange-header">
-              <h3 class="exchange-name">
-                <span class="exchange-icon">${exchange.icon}</span>
-                ${exchange.name}
-              </h3>
-            </div>
-            
-            <div class="trading-pairs">
-              ${exchange.pairs.map((pair, idx) => `
-                <a href="${exchange.urls[idx]}" target="_blank" class="pair-link">
-                  <span class="pair-tag">${pair}</span>
-                  <span class="pair-arrow">→</span>
-                </a>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderMiningPools() {
-      const container = document.getElementById('miningPoolsGrid');
-      if (!container) return;
-      
-      const pools = miningPoolsData[currentLang];
-      
-      container.innerHTML = pools.map(pool => {
-        const visitLabel = currentLang === 'en' ? 'Visit Website' : 'Перейти к сайту';
-        return `
-          <div class="exchange-card-detail">
-            <div class="exchange-header">
-              <h3 class="exchange-name">
-                <span class="exchange-icon">${pool.icon}</span>
-                ${pool.name}
-              </h3>
-            </div>
-            <p class="exchange-description">${pool.description}</p>
-            <a href="${pool.url}" target="_blank" class="trade-btn">${visitLabel}</a>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderFeatures() {
-      const container = document.getElementById('featuresGrid');
-      container.innerHTML = data.features[currentLang].map(feature => `
-        <div class="feature-card">
-          <span class="feature-icon">${feature.icon}</span>
-          <h3 class="feature-title">${feature.title}</h3>
-          <p class="feature-description">${feature.description}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderSpecs() {
-      const container = document.getElementById('specsTable');
-      container.innerHTML = data.specs[currentLang].map((spec, index) => `
-        <div class="spec-item" style="transition-delay: ${index * 0.05}s">
-          <span class="spec-label">${spec.label}</span>
-          <span class="spec-value">${spec.value}</span>
-        </div>
-      `).join('');
-    }
-
-    function renderContracts() {
-      const container = document.getElementById('contractsList');
-      container.innerHTML = data.contracts[currentLang].map((contract, index) => `
-        <div class="contract-item">
-          <div class="contract-label">${contract.label}</div>
-          <div class="contract-address">
-            <span>${contract.value}</span>
-            <button class="copy-btn" onclick="copyToClipboard('${contract.value}', this)">
-              ${currentLang === 'en' ? 'Copy' : 'Копировать'}
-            </button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderExchanges() {
-      const container = document.getElementById('exchangesGrid');
-      if (!container) return;
-      const exchanges = [
-        { name: 'eIquidus', url: 'http://nova.y-chain.net' },
-		{ name: 'cryptoID', url: 'https://chainz.cryptoid.info/nvc/' },
-        { name: 'novaco.in', url: 'https://explorer.novaco.in' }
-      ];
-      container.innerHTML = exchanges.map(exchange => `
-        <a href="${exchange.url}" target="_blank" class="exchange-card">
-          ${exchange.name}
+    <header>
+        <a href="#" class="logo-area">
+            <img src="https://ymakanic.eu.org/static/nvc_logo_round.png" alt="NVC Logo" class="logo-img" />
+            <span class="logo-text">Novacoin</span>
         </a>
-      `).join('');
-    }
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('ru')">РУС</button>
+        </div>
+    </header>
 
-    function renderSocialLinks() {
-      const container = document.getElementById('socialLinks');
-      container.innerHTML = socialMedia.links.map(link => {
-        const label = currentLang === 'en' ? link.label_en : link.label_ru;
-        return `
-          <a href="${link.url}" target="_blank" class="social-link" aria-label="${label}">
-            ${link.icon}
-            <span class="social-tooltip">${label}</span>
-          </a>
-        `;
-      }).join('');
-    }
+    <div class="container">
+        <div class="hero">
+            <div class="hero-left">
+                <h1 data-lang="en" class="active">NovaCoin <span style="color:var(--accent);">(NVC)</span></h1>
+                <h1 data-lang="ru">NovaCoin <span style="color:var(--accent);">(NVC)</span></h1>
+                <p class="sub active" data-lang="en">First hybrid Scrypt PoW / PoS consensus coin. Private transactions. No premine.</p>
+                <p class="sub" data-lang="ru">Первая монета с гибридным Scrypt PoW / PoS консенсусом. Приватные транзакции. Без премайна.</p>
+                <div class="hero-links">
+                    <a href="https://coinmarketcap.com/currencies/novacoin/" target="_blank" class="btn btn-accent">CoinMarketCap</a>
+                    <a href="https://github.com/novacoin-project/novacoin/wiki" target="_blank" class="btn btn-outline active" data-lang="en">Knowledge Base</a>
+                    <a href="https://github.com/novacoin-project/novacoin/wiki" target="_blank" class="btn btn-outline" data-lang="ru">База знаний</a>
+                </div>
+            </div>
+            <div class="hero-logo">
+                <img src="https://rails.nova-game.net/assets/nvc_logo.png" alt="NVC large logo" />
+            </div>
+        </div>
 
-    // Copy to Clipboard
-    window.copyToClipboard = function(text, button) {
-      const tempInput = document.createElement('input');
-      tempInput.value = text;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-      
-      const originalText = button.textContent;
-      button.textContent = currentLang === 'en' ? 'Copied!' : 'Скопировано!';
-      button.classList.add('copied');
-      
-      setTimeout(() => {
-        button.textContent = originalText;
-        button.classList.remove('copied');
-      }, 2000);
-    };
+        <h2 class="section-title active" data-lang="en">Core Features</h2>
+        <h2 class="section-title" data-lang="ru">Ключевые особенности</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3 data-lang="en" class="active">Hybrid Consensus</h3>
+                <h3 data-lang="ru">Гибридный консенсус</h3>
+                <p data-lang="en" class="active"><span class="term" data-tooltip="Proof of Work — consensus based on computational power.">PoW<sup>?</sup></span> only secures the network, while <span class="term" data-tooltip="Proof of Stake — staking coins to validate blocks and earn rewards.">PoS<sup>?</sup></span> also reduces energy use and enables passive income.</p>
+                <p data-lang="ru"><span class="term" data-tooltip="Proof of Work — консенсус на основе вычислительных мощностей.">PoW<sup>?</sup></span> только защищает сеть, тогда как <span class="term" data-tooltip="Proof of Stake — стейкинг монет для подтверждения блоков и получения награды.">PoS<sup>?</sup></span> также снижает энергопотребление и приносит пассивный доход.</p>
+            </div>
+            <div class="feature-card">
+                <h3 data-lang="en" class="active">Private Transactions</h3>
+                <h3 data-lang="ru">Приватные транзакции</h3>
+                <p data-lang="en" class="active">Addresses starting with '5' are private. No mixers, no master nodes — pure P2P privacy.</p>
+                <p data-lang="ru">Адреса, начинающиеся с '5', используют стелс-технологию. Без миксеров и мастернод — честная P2P-приватность.</p>
+            </div>
+            <div class="feature-card">
+                <h3 data-lang="en" class="active">Smooth Emission</h3>
+                <h3 data-lang="ru">Плавная эмиссия</h3>
+                <p data-lang="en" class="active">No hard cap, no halvings. Rewards adapt to network difficulty via continuous curves, promoting long-term stability.</p>
+                <p data-lang="ru">Без жёсткого потолка и халвингов. Награда плавно снижается с ростом сложности, обеспечивая долгосрочную устойчивость.</p>
+            </div>
+        </div>
 
-    // Scroll Animations
-    function setupScrollAnimations() {
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
+        <h2 class="section-title active" data-lang="en">Emission Design</h2>
+        <h2 class="section-title" data-lang="ru">Дизайн эмиссии</h2>
+        <div class="slider-container" id="emissionSlider">
+            <button class="slider-btn" id="prevSlide">&lt;</button>
+            <div class="slider-slides">
+                <div class="slider-track" id="emissionTrack"></div>
+            </div>
+            <button class="slider-btn" id="nextSlide">&gt;</button>
+        </div>
+        <div class="slider-dots" id="emissionDots"></div>
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
-          }
-        });
-      }, observerOptions);
+        <h2 class="section-title active" data-lang="en">Technical Specifications</h2>
+        <h2 class="section-title" data-lang="ru">Технические характеристики</h2>
+        <table class="spec-table active" data-lang="en">
+            <tr><td class="spec-label">Launch date</td><td class="spec-value">05-Feb-13</td><td class="spec-label">Ticker</td><td class="spec-value">NVC</td></tr>	
+            <tr><td class="spec-label">Blockchain type</td><td class="spec-value">BTC-like</td><td class="spec-label">Consensus algorithm</td><td class="spec-value">Hybrid</td></tr>
+            <tr><td class="spec-label">Transaction confirmation method</td><td class="spec-value">PoS+PoW</td><td class="spec-label">PoW algorithm</td><td class="spec-value">Scrypt</td></tr>			
+            <tr><td class="spec-label">Number of transaction confirmations</td><td class="spec-value">6</td><td class="spec-label">Number of block confirmations</td><td class="spec-value">520</td></tr>
+            <tr><td class="spec-label">Min/max stake age, days</td><td class="spec-value">30/120</td><td class="spec-label">Standard transaction fee, NVC/kB</td><td class="spec-value">0.001</td></tr>
+            <tr><td class="spec-label">PoS target spacing, minutes</td><td class="spec-value">10</td><td class="spec-label">PoW target spacing, minutes</td><td class="spec-value">30</td></tr>
+            <tr><td class="spec-label">Max PoS reward, coins</td><td class="spec-value">10</td><td class="spec-label">Max PoW reward, coins</td><td class="spec-value">100</td></tr>
+            <tr><td class="spec-label">Mainnet/testnet P2P port</td><td class="spec-value">7777/17777</td><td class="spec-label">Mainnet/testnet JSON-RPC port</td><td class="spec-value">8344/18344</td></tr>
+		</table>
+        <table class="spec-table" data-lang="ru">
+            <tr><td class="spec-label">Дата запуска</td><td class="spec-value">05.02.2013</td><td class="spec-label">Тикер</td><td class="spec-value">NVC</td></tr>		
+            <tr><td class="spec-label">Тип Блокчейна</td><td class="spec-value">BTC-подобный</td><td class="spec-label">Алгоритм консенсуса</td><td class="spec-value">Гибридный</td></tr>
+            <tr><td class="spec-label">Метод подтверждения транзакций</td><td class="spec-value">PoS+PoW</td><td class="spec-label">PoW алгоритм</td><td class="spec-value">Scrypt</td></tr>			
+            <tr><td class="spec-label">Рекомендуемое число подтверждений транзакции</td><td class="spec-value">6</td><td class="spec-label">Необходимое число подтверждений блока</td><td class="spec-value">520</td></tr>	
+            <tr><td class="spec-label">Период созревания входа, дней</td><td class="spec-value">30-120</td><td class="spec-label">Стандартная комиссия, NVC/кБ</td><td class="spec-value">0.001</td></tr>
+            <tr><td class="spec-label">Целевой интервал PoS, минут</td><td class="spec-value">10</td><td class="spec-label">Целевой интервал PoW, минут</td><td class="spec-value">30</td></tr>
+            <tr><td class="spec-label">Максимальная награда PoS, монет</td><td class="spec-value">10</td><td class="spec-label">Максимальная PoW награда, монет</td><td class="spec-value">100</td></tr>
+            <tr><td class="spec-label">P2P порт основной/тестовой сети</td><td class="spec-value">7777/17777</td><td class="spec-label">JSON-RPC порт основной/тестовой сети</td><td class="spec-value">8344/18344</td></tr>	
+        </table>
 
-      // Observe all animatable elements
-      const animatableSelectors = [
-        '.feature-card',
-        '.advantage-card',
-        '.spec-item'
-      ];
+        <h2 class="section-title active" data-lang="en">BEP-20 Token</h2>
+        <h2 class="section-title" data-lang="ru">BEP-20 мост</h2>
+        <div class="token-section">
+            <div class="token-item">
+                <div class="token-label">Token Contract Address</div>
+                <div class="address-box"><span style="flex:1;">0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19</span><button class="copy-btn" onclick="copyText('0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19',this)">Copy</button>
+				<a class="copy-btn" href="https://bscscan.com/token/0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19" target="_blank">Link</a></div>
+                <a style="color:var(--accent);font-size:12px;" href="https://ymakanic.eu.org/static/migrate.html">Migrate from old contract↗</a>
+            </div>
+            <div class="token-item">				
+                <div class="token-label">Bridge Reserve MultiSig Safe</div>
+                <div class="address-box"><span style="flex:1;">0xB1C2F7Abb355151BAdF47655390dD259Ddf1bf3d</span><button class="copy-btn" onclick="copyText('0xB1C2F7Abb355151BAdF47655390dD259Ddf1bf3d',this)">Copy</button>
+				<a class="copy-btn" href="https://app.safe.global/balances?safe=bnb:0xB1C2F7Abb355151BAdF47655390dD259Ddf1bf3d" target="_blank">Link</a></div>
+            </div>
+            <div class="token-item">				
+                <div class="token-label">UTXO Proof-of-Funds MultiSig</div>				
+                <div class="address-box"><span style="flex:1;">9EuEfZLL5tnagtMgFHtaEv2dGtZnE7cAZU</span><button class="copy-btn" onclick="copyText('9EuEfZLL5tnagtMgFHtaEv2dGtZnE7cAZU',this)">Copy</button>
+				<a class="copy-btn" href="https://nova.y-chain.net/address/9EuEfZLL5tnagtMgFHtaEv2dGtZnE7cAZU" target="_blank">Link</a></div>
+            </div>
+            <div class="token-item">				
+                <div class="token-label">Telegram Bridge Bot</div>				
+                <div class="address-box"><span style="flex:1;">@nvc_bridge_bot</span><button class="copy-btn" onclick="copyText('@nvc_bridge_bot',this)">Copy</button>
+				<a class="copy-btn" href="https://t.me/nvc_bridge_bot" target="_blank">Link</a></div>
+            </div>			
+        </div>
 
-      animatableSelectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(el => {
-          observer.observe(el);
-        });
-      });
-    }
+        <h2 class="section-title active" data-lang="en">Wallets</h2>
+        <h2 class="section-title" data-lang="ru">Кошельки</h2>
+        <div class="tabs" id="walletTabs">
+            <select class="tab-select" id="walletSelect">
+                <option value="windows">Windows</option>
+                <option value="macos">macOS</option>
+                <option value="linux">Linux</option>
+                <option value="android">Android</option>
+            </select>
+            <button class="tab-btn active" data-tab="windows">Windows</button>
+            <button class="tab-btn" data-tab="macos">macOS</button>
+            <button class="tab-btn" data-tab="linux">Linux</button>
+            <button class="tab-btn" data-tab="android">Android</button>
+        </div>
+        <div class="tab-content" id="walletTabContent"></div>
 
-    // Smooth scroll to section
-    function scrollToSection(sectionId) {
-      if (sectionId === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-      
-      const targetSection = document.getElementById(sectionId);
-      if (targetSection) {
-        const offsetTop = targetSection.offsetTop - 80;
-        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-      }
-    }
+        <h2 class="section-title active" data-lang="en">Exchanges</h2>
+        <h2 class="section-title" data-lang="ru">Биржи</h2>
+        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:2rem; margin-bottom:3rem;" id="exchangeGrid"></div>
 
-    // Wallet category switching
-    function setupWalletCategories() {
-      const categoryButtons = document.querySelectorAll('.category-btn');
-      
-      categoryButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          // Update active state
-          categoryButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          
-          // Update category and render
-          currentWalletCategory = btn.getAttribute('data-category');
-          renderWallets();
-        });
-      });
-    }
+        <h2 class="section-title active" data-lang="en">Other</h2>
+        <h2 class="section-title" data-lang="ru">Прочее</h2>
+        <div class="tabs" id="otherTabs"></div>
+        <div class="tab-content" id="otherTabContent"></div>
+    </div>
 
-    // Navigation
-    function setupNavigation() {
-      const header = document.getElementById('header');
-      const navLinks = document.querySelectorAll('.nav-link');
-      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-      const navLinksContainer = document.getElementById('navLinks');
+    <footer>
+        <p> © MMXXVI NovaCoin Foundation. Designed by some fluffy creature.</p>
+        <div class="social-links">
+            <a href="https://github.com/novacoin-project" target="_blank">GitHub</a>
+            <a href="https://t.me/NovaCoin_News" target="_blank">Telegram</a>
+            <a href="https://discord.gg/6juXnsSkGa" target="_blank">Discord</a>
+            <a href="https://bitcointalk.org/index.php?topic=5189560.0" target="_blank">Bitcointalk</a>
+            <a href="https://reddit.com/r/NovacoinCommunity" target="_blank">Reddit</a>
+            <a href="https://x.com/Novacoin_NVC" target="_blank">Twitter/X</a>
+        </div>
+    </footer>
 
-      // Scroll header effect
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
-        }
+    <script>
+        (function() {
+            let currentLang = 'en';
+            let currentEmissionSlide = 0;
 
-        // Update active nav link
-        updateActiveNavLink();
-      });
+            window.setLang = function(lang) {
+                currentLang = lang;
+                document.querySelectorAll('[data-lang]').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => el.classList.add('active'));
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+                
+                buildEmissionSlider(lang);
+                buildWalletTabs(lang);
+                buildOtherTabs(lang);
+                updateEmissionSlide(0);
+            };
 
-      // Navigation click handler
-      navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').substring(1);
-          
-          // Update active nav link
-          navLinks.forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-          
-          // Scroll to section
-          scrollToSection(targetId);
+            window.copyText = function(text, btn) {
+                navigator.clipboard.writeText(text).then(() => {
+                    btn.textContent = 'Copied';
+                    btn.classList.add('copied');
+                    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+                });
+            };
 
-          // Close mobile menu
-          navLinksContainer.classList.remove('active');
-        });
-      });
-      
-// Footer links
-document.querySelectorAll('.footer-link').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const href = link.getAttribute('href');
+            const emissionData = [
+                { 
+                    enTitle: 'Continuous Decay',
+                    ruTitle: 'Непрерывное снижение',
+                    enBody: 'PoW reward follows <code>~100 / Difficulty<sup>1/6</sup></code>. To halve the reward, difficulty must increase 64× — a smooth curve with no sudden jumps.',
+                    ruBody: 'Награда PoW: <code>~100 / Сложность<sup>1/6</sup></code>. Для двукратного падения награды сложность должна вырасти в 64 раза — плавная кривая без резких скачков.'
+                },
+                { 
+                    enTitle: 'PoS Rate Adaptation',
+                    ruTitle: 'Адаптивная ставка PoS',
+                    enBody: 'Annual rate <code>~ 1 / Difficulty<sup>1/3</sup></code>, bounded between 1% and 100%. High difficulty trims inflation; low difficulty boosts participation.',
+                    ruBody: 'Годовая ставка <code>~ 1 / Сложность<sup>1/3</sup></code>, ограничена 1–100%. Высокая сложность снижает инфляцию, низкая — стимулирует участие.'
+                },
+                { 
+                    enTitle: '10 NVC Cap & Decentralization',
+                    ruTitle: 'Лимит 10 NVC и децентрализация',
+                    enBody: 'PoS block reward cannot exceed 10 NVC. This forces large holders to split their coins into many UTXOs, increasing network reliability and security.',
+                    ruBody: 'Награда за PoS-блок не превышает 10 NVC. Это вынуждает крупных держателей дробить монеты на множество UTXO, повышая надежность и защищенность сети.'
+                },
+                { 
+                    enTitle: 'Time as Capital',
+                    ruTitle: 'Время как капитал',
+                    enBody: 'Coins must mature for 30 days to stake. Rewards are locked for 520 confirmations. Selling early forfeits accrued time — discouraging speculation.',
+                    ruBody: 'Монеты созревают 30 дней для стейкинга. Награда блокируется на 520 подтверждений. Ранняя продажа обнуляет накопленное время — сдерживает спекуляции.'
+                },
+                { 
+                    enTitle: 'Negative Feedback Loop',
+                    ruTitle: 'Отрицательная обратная связь',
+                    enBody: 'When hashrate drops, difficulty falls and rewards temporarily rise, attracting miners back. This self-regulating cycle stabilizes the network without external intervention.',
+                    ruBody: 'При падении хешрейта сложность снижается, награда временно растёт, привлекая майнеров обратно. Саморегуляция стабилизирует сеть без внешних воздействий.'
+                }
+            ];
 
-    // Internal links (#anchor)
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const targetId = href.substring(1);
+            const emissionTrack = document.getElementById('emissionTrack');
+            const emissionDots = document.getElementById('emissionDots');
+            let slides = [];
 
-      // Update nav
-      navLinks.forEach(l => l.classList.remove('active'));
-      const navLink = document.querySelector(`.nav-link[href="#${targetId}"]`);
-      if (navLink) navLink.classList.add('active');
+            function buildEmissionSlider(lang) {
+                emissionTrack.innerHTML = '';
+                emissionDots.innerHTML = '';
+                slides = [];
+                
+                emissionData.forEach((item, idx) => {
+                    const title = lang === 'ru' ? item.ruTitle : item.enTitle;
+                    const body = lang === 'ru' ? item.ruBody : item.enBody;
+                    
+                    const slide = document.createElement('div');
+                    slide.className = 'slider-slide';
+                    slide.innerHTML = `<h3>${title}</h3><p>${body}</p>`;
+                    emissionTrack.appendChild(slide);
+                    slides.push(slide);
 
-      scrollToSection(targetId);
-    }
-
-    // External links (http/https) — allow
-    else {
-      // e.preventDefault();
-      // window.open(href, '_blank');
-    }
-  });
-});
-      
-      // Logo click
-      document.querySelector('.logo').addEventListener('click', () => {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const homeLink = document.querySelector('.nav-link[href="#home"]');
-        if (homeLink) homeLink.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // Mobile menu toggle
-      mobileMenuBtn.addEventListener('click', () => {
-        navLinksContainer.classList.toggle('active');
-      });
-    }
-
-    function updateActiveNavLink() {
-      const sections = document.querySelectorAll('section[id]');
-      const navLinks = document.querySelectorAll('.nav-link');
-      
-      let currentSection = '';
-      
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-          currentSection = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentSection) {
-          link.classList.add('active');
-        }
-      });
-    }
-
-    // Event Listeners
-    function setupEventListeners() {
-      // Re-setup scroll animations when content changes
-      const observer = new MutationObserver(() => {
-        setupScrollAnimations();
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    }
-
-    // Parallax Effect for Coin
-    function setupParallax() {
-      const heroCoin = document.getElementById('heroCoin');
-      if (!heroCoin) return;
-
-      let ticking = false;
-
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            const scrolled = window.pageYOffset;
-            const heroSection = document.querySelector('.hero');
-            
-            if (heroSection) {
-              const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-              
-              if (scrolled < heroBottom) {
-                // Parallax effect - coin moves slower than scroll
-                const parallaxSpeed = 0.3;
-                heroCoin.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-              }
+                    const dot = document.createElement('div');
+                    dot.className = 'dot';
+                    dot.addEventListener('click', () => updateEmissionSlide(idx));
+                    emissionDots.appendChild(dot);
+                });
             }
-            
-            ticking = false;
-          });
-          
-          ticking = true;
-        }
-      });
-    }
 
-    // Initialize on load
-    document.addEventListener('DOMContentLoaded', () => {
-      init();
-      setupParallax();
-      setupWalletCategories();
-      
-      // Handle initial hash
-      const hash = window.location.hash.substring(1);
-      if (hash) {
-        setTimeout(() => {
-          scrollToSection(hash);
-          const navLink = document.querySelector(`.nav-link[href="#${hash}"]`);
-          if (navLink) {
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            navLink.classList.add('active');
-          }
-        }, 100);
-      }
-    });
-  </script>
+            function updateEmissionSlide(index) {
+                if (!slides.length) return;
+                currentEmissionSlide = Math.max(0, Math.min(index, slides.length - 1));
+                emissionTrack.style.transform = `translateX(-${currentEmissionSlide * 100}%)`;
+                
+                const dots = emissionDots.querySelectorAll('.dot');
+                dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentEmissionSlide));
+                document.getElementById('prevSlide').disabled = currentEmissionSlide === 0;
+                document.getElementById('nextSlide').disabled = currentEmissionSlide === slides.length - 1;
+            }
+
+            document.getElementById('prevSlide').addEventListener('click', () => updateEmissionSlide(currentEmissionSlide - 1));
+            document.getElementById('nextSlide').addEventListener('click', () => updateEmissionSlide(currentEmissionSlide + 1));
+
+            const wallets = {
+                windows: [
+                    { name:'NovaCoin Core (x86)', desc:'v0.5.10 Windows 10-11 x86_64', link:'https://github.com/novacoin-project/novacoin/releases/download/nvc-v0.5.10/v0.5.10-win32-x86_64.zip' },				
+                    { name:'NovaCoin Core (ARM)', desc:'v0.5.10 Windows 10-11 aarch64', link:'https://github.com/novacoin-project/novacoin/releases/download/nvc-v0.5.10/v0.5.10-win32-aarch64.zip' },
+                    { name:'NovaCoin Core (x86)', desc:'v0.5.9 Windows XP-10 x86_32', link:'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9_leveldb-win.zip' }
+                ],
+                macos: [
+                    { name:'NovaCoin Core (macOS)', desc:'v0.5.10 macOS 11.7.10+', link:'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin-qt_v0.5.10-x86_64_macos.dmg' }
+                ],
+                linux: [
+                    { name:'NovaCoin Core (Ubuntu 20)', desc:'v0.5.10 Ubuntu 20+', link:'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin_v0.5.10-ubuntu20.tar.xz' },
+                    { name:'NovaCoin Core (Ubuntu 18)', desc:'v0.5.10 Ubuntu 18', link:'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.10/novacoin_v0.5.10-ubuntu18.tar.xz' }
+                ],
+                android: [
+                    { name:'NovaCoin Core (ARM)', desc:'v0.5.9 Android 4+ ARMv7a', link:'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9-android_arm.apk' },
+                    { name:'NovaCoin Core (x86)', desc:'v0.5.9 Android 4+ x86', link:'https://github.com/nova-coin/novacoin/releases/download/nvc-v0.5.9/novacoin-qt_v0.5.9-android_x86.apk' }
+                ]
+            };
+
+            function buildWalletTabs(lang) {
+                const tabContent = document.getElementById('walletTabContent');
+                tabContent.innerHTML = '';
+                Object.keys(wallets).forEach(tab => {
+                    const pane = document.createElement('div');
+                    pane.className = `tab-pane ${tab === 'windows' ? 'active' : ''}`;
+                    pane.dataset.tab = tab;
+                    wallets[tab].forEach(w => {
+                        pane.innerHTML += `
+                            <div class="tab-item">
+                                <div><div class="item-name">${w.name}</div><div class="item-desc">${w.desc}</div></div>
+                                <a href="${w.link}" target="_blank" class="btn btn-outline">Download</a>
+                            </div>`;
+                    });
+                    tabContent.appendChild(pane);
+                });
+
+                // Tab buttons click handlers
+                document.querySelectorAll('#walletTabs .tab-btn').forEach(btn => {
+                    btn.onclick = () => {
+                        const tab = btn.dataset.tab;
+                        document.querySelectorAll('#walletTabs .tab-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        document.querySelectorAll('#walletTabContent .tab-pane').forEach(p => p.classList.remove('active'));
+                        document.querySelector(`#walletTabContent .tab-pane[data-tab="${tab}"]`).classList.add('active');
+                        document.getElementById('walletSelect').value = tab;
+                    };
+                });
+                
+                // Select change handler
+                const walletSelect = document.getElementById('walletSelect');
+                walletSelect.addEventListener('change', function() {
+                    const tab = this.value;
+                    document.querySelectorAll('#walletTabs .tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector(`#walletTabs .tab-btn[data-tab="${tab}"]`).classList.add('active');
+                    document.querySelectorAll('#walletTabContent .tab-pane').forEach(p => p.classList.remove('active'));
+                    document.querySelector(`#walletTabContent .tab-pane[data-tab="${tab}"]`).classList.add('active');
+                });
+            }
+
+            function buildOtherTabs(lang) {
+                const tabsContainer = document.getElementById('otherTabs');
+                const tabContent = document.getElementById('otherTabContent');
+                tabsContainer.innerHTML = '';
+                tabContent.innerHTML = '';
+
+                const poolsLabel = lang === 'ru' ? 'Майнинг пулы' : 'Mining Pools';
+                const explorersLabel = lang === 'ru' ? 'Обозреватели' : 'Explorers';
+                const visitText = lang === 'ru' ? 'Посетить' : 'Visit';
+                const openText = lang === 'ru' ? 'Открыть' : 'Open';
+
+                // Create select for mobile
+                const select = document.createElement('select');
+                select.className = 'tab-select';
+                select.id = 'otherSelect';
+
+                const poolsOption = document.createElement('option');
+                poolsOption.value = 'pools';
+                poolsOption.textContent = poolsLabel;
+                select.appendChild(poolsOption);
+
+                const explorersOption = document.createElement('option');
+                explorersOption.value = 'explorers';
+                explorersOption.textContent = explorersLabel;
+                select.appendChild(explorersOption);
+
+                tabsContainer.appendChild(select);
+
+                // Create tab buttons
+                const poolsBtn = document.createElement('button');
+                poolsBtn.className = 'tab-btn active';
+                poolsBtn.dataset.tab = 'pools';
+                poolsBtn.textContent = poolsLabel;
+                tabsContainer.appendChild(poolsBtn);
+
+                const explorersBtn = document.createElement('button');
+                explorersBtn.className = 'tab-btn';
+                explorersBtn.dataset.tab = 'explorers';
+                explorersBtn.textContent = explorersLabel;
+                tabsContainer.appendChild(explorersBtn);
+
+                // Create panes
+                const poolsPane = document.createElement('div');
+                poolsPane.className = 'tab-pane active';
+                poolsPane.dataset.tab = 'pools';
+                poolsPane.innerHTML = `
+                    <div class="tab-item">
+                        <div><div class="item-name">SVCPool</div><div class="item-desc">${lang === 'ru' ? 'Стейкинг пул' : 'PoS staking pool'}</div></div>
+                        <a href="https://svcpool.io/" target="_blank" class="btn btn-outline">${visitText}</a>
+                    </div>
+                    <div class="tab-item">
+                        <div><div class="item-name">PoW Pools</div><div class="item-desc">${lang === 'ru' ? 'Список PoW пулов' : 'Full list of PoW mining pools'}</div></div>
+                        <a href="https://miningpoolstats.stream/novacoin" target="_blank" class="btn btn-outline">${visitText}</a>
+                    </div>`;
+                tabContent.appendChild(poolsPane);
+
+                const explorersPane = document.createElement('div');
+                explorersPane.className = 'tab-pane';
+                explorersPane.dataset.tab = 'explorers';
+                explorersPane.innerHTML = `
+                    <div class="tab-item">
+                        <div><div class="item-name">eIquidus</div><div class="item-desc">Block explorer</div></div>
+                        <a href="http://nova.y-chain.net" target="_blank" class="btn btn-outline">${openText}</a>
+                    </div>
+                    <div class="tab-item">
+                        <div><div class="item-name">novaco.in</div><div class="item-desc">Alternative explorer</div></div>
+                        <a href="https://explorer.novaco.in" target="_blank" class="btn btn-outline">${openText}</a>
+                    </div>`;
+                tabContent.appendChild(explorersPane);
+                
+                // Select change handler
+                select.addEventListener('change', () => {
+                    const val = select.value;
+                    tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    tabsContainer.querySelector(`.tab-btn[data-tab="${val}"]`).classList.add('active');
+                    tabContent.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    tabContent.querySelector(`.tab-pane[data-tab="${val}"]`).classList.add('active');
+                });
+
+                // Sync select when buttons clicked
+                poolsBtn.addEventListener('click', () => { select.value = 'pools'; });
+                explorersBtn.addEventListener('click', () => { select.value = 'explorers'; });
+
+                // Tab buttons click handlers
+                tabsContainer.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const tab = btn.dataset.tab;
+                        tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        tabContent.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                        tabContent.querySelector(`.tab-pane[data-tab="${tab}"]`).classList.add('active');
+                    });
+                });
+            }
+
+            const exchanges = [
+                { title:'FreiExchange', desc:'NVC/BTC', link:'https://freiexchange.com/market/NVC/BTC' },
+                { title:'FreiExchange', desc:'NVC/LTC', link:'https://freixlite.com/market/NVC/LTC' },
+                { title:'PancakeSwap', desc:'NVC/BTCB', link:'https://pancakeswap.finance/swap?outputCurrency=0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19&chainId=56&inputCurrency=0x55d398326f99059fF775485246999027B3197955&chain=bsc' }
+            ];
+            document.getElementById('exchangeGrid').innerHTML = exchanges.map(e => `
+                <div style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:1.5rem;">
+                    <h3>${e.title}</h3><p style="color:var(--muted);">${e.desc}</p>
+                    <a href="${e.link}" target="_blank" class="btn btn-outline" style="margin-top:1rem;">Trade</a>
+                </div>`).join('');
+
+            // Initial builds
+            buildEmissionSlider('en');
+            buildWalletTabs('en');
+            buildOtherTabs('en');
+            updateEmissionSlide(0);
+        })();
+    </script>
 </body>
 </html>
