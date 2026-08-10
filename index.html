@@ -125,7 +125,7 @@
 <body>
     <header>
         <a href="#" class="logo-area">
-            <img src="https://ymakanic.eu.org/static/nvc_logo_round.png" alt="NVC Logo" class="logo-img" />
+            <img src="https://nova-coin.github.io/nvc_logo_round.png" alt="NVC Logo" class="logo-img" />
             <span class="logo-text">Novacoin</span>
         </a>
         <div class="lang-switch">
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="hero-logo">
-                <img src="https://rails.nova-game.net/assets/nvc_logo.png" alt="NVC large logo" />
+                <img src="https://nova-coin.github.io/nvc_logo.png" alt="NVC large logo" />
             </div>
         </div>
 
@@ -216,7 +216,7 @@
                 <div class="token-label">Token Contract Address</div>
                 <div class="address-box"><span style="flex:1;">0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19</span><button class="copy-btn" onclick="copyText('0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19',this)">Copy</button>
 				<a class="copy-btn" href="https://bscscan.com/token/0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19" target="_blank">Link</a></div>
-                <a style="color:var(--accent);font-size:12px;" href="https://ymakanic.eu.org/static/migrate.html">Migrate from old contract↗</a>
+                <a style="color:var(--accent);font-size:12px;" href="https://nova-coin.org">Migrate from old contract↗</a>
             </div>
             <div class="token-item">				
                 <div class="token-label">Bridge Reserve MultiSig Safe</div>
@@ -262,7 +262,7 @@
     </div>
 
     <footer>
-        <p> © MMXXVI NovaCoin Foundation. Designed by some fluffy creature.</p>
+        <p> © MMXXVI NovaCoin Foundation. Open-source decentralized cryptocurrency.</p>
         <div class="social-links">
             <a href="https://github.com/novacoin-project" target="_blank">GitHub</a>
             <a href="https://t.me/NovaCoin_News" target="_blank">Telegram</a>
@@ -496,6 +496,10 @@
                         <a href="http://nova.y-chain.net" target="_blank" class="btn btn-outline">${openText}</a>
                     </div>
                     <div class="tab-item">
+                        <div><div class="item-name">cryptoID</div><div class="item-desc">Block explorer</div></div>
+                        <a href="https://chainz.cryptoid.info/nvc/" target="_blank" class="btn btn-outline">${openText}</a>
+                    </div>
+                    <div class="tab-item">
                         <div><div class="item-name">novaco.in</div><div class="item-desc">Alternative explorer</div></div>
                         <a href="https://explorer.novaco.in" target="_blank" class="btn btn-outline">${openText}</a>
                     </div>`;
@@ -528,7 +532,10 @@
 
             const exchanges = [
                 { title:'FreiExchange', desc:'NVC/BTC', link:'https://freiexchange.com/market/NVC/BTC' },
-                { title:'FreiExchange', desc:'NVC/LTC', link:'https://freixlite.com/market/NVC/LTC' },
+                { title:'FreiXLite', desc:'NVC/LTC', link:'https://freixlite.com/market/NVC/LTC' },
+                { title:'BTC TRADE UA', desc:'NVC/BTC', link:'https://btc-trade.com.ua/stock/nvc_btc' },
+                { title:'CrexSoft', desc:'NVC/LTC', link:'https://crexsoft.com/ru/trade/NVC/BTC' },
+                { title:'XBTS DEX', desc:'NVC/LTC', link:'https://ex.xbts.io/market/XBTSX.NVC_XBTSX.BTC' },
                 { title:'PancakeSwap', desc:'NVC/BTCB', link:'https://pancakeswap.finance/swap?outputCurrency=0x02C13f421ABCdD8A11faC1a4aE43c59d51FB9e19&chainId=56&inputCurrency=0x55d398326f99059fF775485246999027B3197955&chain=bsc' }
             ];
             document.getElementById('exchangeGrid').innerHTML = exchanges.map(e => `
